@@ -10,7 +10,7 @@
 :root { --paper: #f1f0ec; --ink: #121212; --mute: #4a4a47; --accent: #b5441f; --line: #cfcdc5; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans Hebrew', system-ui, sans-serif; font-size: 16px; line-height: 1.5; }
-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 18px 20px; border-bottom: 2px solid var(--ink); position: sticky; top: 0; background: var(--paper); z-index: 5; }
+header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px 24px; padding: 18px 20px; border-bottom: 2px solid var(--ink); position: sticky; top: 0; background: var(--paper); z-index: 5; }
 h1 { margin: 0; font-family: 'Karantina', sans-serif; font-size: 44px; line-height: 1; }
 main { max-width: 900px; margin: 0 auto; padding: 24px 20px 120px; }
 button, input, textarea, select { font: inherit; color: inherit; }
@@ -26,7 +26,7 @@ input[type=text], input[type=password], input[type=date], textarea, select { wid
 input:focus, textarea:focus, select:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
 textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
 [dir=ltr] { text-align: left; }
-.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-inline-end: auto; }
 .tabs button[aria-selected=true] { background: var(--ink); color: var(--paper); }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px 16px; }
 .card { border: 1.5px solid var(--line); background: #faf9f6; padding: 16px; margin-bottom: 16px; }
@@ -54,11 +54,29 @@ details.card[open] > summary { margin-bottom: 14px; }
 .drop:hover, .drop.over { background: #e4e2da; }
 .drop input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .new { color: var(--accent); font-size: 13px; font-weight: 600; }
+@media (max-width: 640px) {
+  header { padding: 8px 12px; gap: 6px 10px; }
+  h1 { display: none; }
+  .tabs { width: 100%; gap: 6px; }
+  .tabs button { flex: 1; padding: 8px 6px; font-size: 15px; white-space: nowrap; }
+  #c-state { display: none; }
+  [data-tab=connect]::after { content: ''; display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #b3261e; margin-inline-start: 6px; }
+  [data-tab=connect].on::after { background: #2e7d32; }
+  header > div:last-child { width: 100%; gap: 10px !important; }
+  header .status { flex: 1; font-size: 13px; }
+  #save { padding: 8px 14px; }
+}
 </style>
 </head>
 <body>
 <header>
   <h1>ניהול האתר</h1>
+  <div class="tabs" role="tablist">
+    <button role="tab" data-tab="works" aria-selected="true">עבודות</button>
+    <button role="tab" data-tab="texts" aria-selected="false">טקסטים</button>
+    <button role="tab" data-tab="general" aria-selected="false">כללי</button>
+    <button role="tab" data-tab="connect" aria-selected="false">חיבור <span id="c-state"></span></button>
+  </div>
   <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
     <span class="status" id="status" role="status"></span>
     <a href="../" target="_blank" rel="noopener">לאתר ↗</a>
@@ -66,12 +84,6 @@ details.card[open] > summary { margin-bottom: 14px; }
   </div>
 </header>
 <main>
-  <div class="tabs" role="tablist">
-    <button role="tab" data-tab="works" aria-selected="true">עבודות</button>
-    <button role="tab" data-tab="texts" aria-selected="false">טקסטים</button>
-    <button role="tab" data-tab="general" aria-selected="false">כללי</button>
-    <button role="tab" data-tab="connect" aria-selected="false">חיבור <span id="c-state"></span></button>
-  </div>
   <section id="panel"></section>
   <div class="connect" id="connect" hidden>
     <h2>חיבור ל־GitHub</h2>
@@ -100,7 +112,7 @@ details.card[open] > summary { margin-bottom: 14px; }
   const removed = new Set();   // repo paths to delete on save
 
   const status = (msg, err) => { $('status').textContent = msg || ''; $('status').className = 'status' + (err ? ' err' : ''); };
-  const syncBox = (show) => { $('c-state').textContent = connected ? '· מחובר' : '· לא מחובר'; if (show === true) tab = 'connect'; else if (show === false && tab === 'connect') tab = 'works'; };
+  const syncBox = (show) => { $('c-state').textContent = connected ? '· מחובר' : '· לא מחובר'; $('c-state').parentElement.classList.toggle('on', connected); $('c-state').parentElement.setAttribute('aria-label', connected ? 'חיבור: מחובר' : 'חיבור: לא מחובר'); if (show === true) tab = 'connect'; else if (show === false && tab === 'connect') tab = 'works'; };
   const openProjects = new Set();
   const markDirty = () => { dirty = true; $('save').disabled = !connected; status(connected ? 'יש שינויים שלא נשמרו' : 'יש שינויים. התחבר כדי לשמור'); };
 
