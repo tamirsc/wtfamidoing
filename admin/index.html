@@ -244,7 +244,7 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
   window.addEventListener('beforeunload', (e) => { if (dirty) e.preventDefault(); });
 
   /* ---------- start ---------- */
-  const guess = location.hostname.endsWith('.github.io') ? { owner: location.hostname.split('.')[0], repo: location.pathname.split('/')[1] || location.hostname } : {};
+  const guess = { owner: 'tamirsc', repo: 'wtfamidoing' };
   $('c-owner').value = cfg.owner || guess.owner || '';
   $('c-repo').value = cfg.repo || guess.repo || '';
   $('c-branch').value = cfg.branch || 'main';
