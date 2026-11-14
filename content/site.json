@@ -1,8 +1,11 @@
 {
-  "artist": { "he": "תמיר שורץ", "en": "Tamir Schwarts" },
+  "artist": {
+    "he": "תמיר שורץ",
+    "en": "Tamir Schwarts"
+  },
   "tagline": {
-    "he": "אני מצלם תוך כדי שיטוט, ונמשך למה שרוב האנשים עוברים לידו.",
-    "en": "I photograph while wandering, drawn to what most people walk past."
+    "he": "",
+    "en": ""
   },
   "quote": {
     "he": "השבר הופך שם לחלק מהדימוי עצמו.",
@@ -29,15 +32,159 @@
     "shop": "https://www.under1000.com/he-IL/artists/%D7%AA%D7%9E%D7%99%D7%A8-%D7%A9%D7%95%D7%A8%D7%A5-3537e452"
   },
   "works": [
-    { "id": "beyond-the-fence", "title": { "he": "מעבר לגדר", "en": "Beyond the Fence" }, "medium": { "he": "דיו על לוח קרטון", "en": "Ink on board" }, "size": "67×50", "src": "photos/beyond-the-fence.jpg", "thumb": "photos/beyond-the-fence-s.jpg", "w": 1920, "h": 1440, "hero": false },
-    { "id": "forest-script", "title": { "he": "כתב יער", "en": "Forest Script" }, "medium": { "he": "דיו על נייר", "en": "Ink on paper" }, "size": "35×35", "src": "photos/forest-script.jpg", "thumb": "photos/forest-script-s.jpg", "w": 1920, "h": 1920, "hero": false },
-    { "id": "growth-through-glass", "title": { "he": "צמיחה מבעד לזכוכית", "en": "Growth Through Glass" }, "medium": { "he": "דיו על נייר", "en": "Ink on paper" }, "size": "38×32", "src": "photos/growth-through-glass.jpg", "thumb": "photos/growth-through-glass-s.jpg", "w": 1688, "h": 2000, "hero": false },
-    { "id": "bands-of-landscape", "title": { "he": "רצועות נוף", "en": "Bands of Landscape" }, "medium": { "he": "דיו על נייר", "en": "Ink on paper" }, "size": "35×20", "src": "photos/bands-of-landscape.jpg", "thumb": "photos/bands-of-landscape-s.jpg", "w": 1920, "h": 1080, "hero": true },
-    { "id": "lines-of-mending", "title": { "he": "קווי איחוי", "en": "Lines of Mending" }, "medium": { "he": "דיו על נייר", "en": "Ink on paper" }, "size": "40×55", "src": "photos/lines-of-mending.jpg", "thumb": "photos/lines-of-mending-s.jpg", "w": 1161, "h": 1600, "hero": true },
-    { "id": "inner-circle", "title": { "he": "מעגל פנימי", "en": "Inner Circle" }, "medium": { "he": "דיו על לוח קרטון", "en": "Ink on board" }, "size": "45×41", "src": "photos/inner-circle.jpg", "thumb": "photos/inner-circle-s.jpg", "w": 1920, "h": 1755, "hero": false },
-    { "id": "flowchart", "title": { "he": "תרשים זרימה", "en": "Flowchart" }, "medium": { "he": "דיו על לוח קרטון", "en": "Ink on board" }, "size": "60×45", "src": "photos/flowchart.jpg", "thumb": "photos/flowchart-s.jpg", "w": 1920, "h": 1440, "hero": false },
-    { "id": "living-rust", "title": { "he": "חלודה חיה", "en": "Living Rust" }, "medium": { "he": "דיו על לוח קרטון", "en": "Ink on board" }, "size": "38×50", "src": "photos/living-rust.jpg", "thumb": "photos/living-rust-s.jpg", "w": 1482, "h": 1975, "hero": true },
-    { "id": "waves-of-gold", "title": { "he": "גלי זהב", "en": "Waves of Gold" }, "medium": { "he": "דיו על נייר", "en": "Ink on paper" }, "size": "45×60", "src": "photos/waves-of-gold.jpg", "thumb": "photos/waves-of-gold-s.jpg", "w": 1501, "h": 2000, "hero": true }
+    {
+      "id": "beyond-the-fence",
+      "title": {
+        "he": "מעבר לגדר",
+        "en": "Beyond the Fence"
+      },
+      "medium": {
+        "he": "דיו על לוח קרטון",
+        "en": "Ink on board"
+      },
+      "size": "67×50",
+      "src": "photos/beyond-the-fence.jpg",
+      "thumb": "photos/beyond-the-fence-s.jpg",
+      "w": 1920,
+      "h": 1440,
+      "hero": false
+    },
+    {
+      "id": "forest-script",
+      "title": {
+        "he": "כתב יער",
+        "en": "Forest Script"
+      },
+      "medium": {
+        "he": "דיו על נייר",
+        "en": "Ink on paper"
+      },
+      "size": "35×35",
+      "src": "photos/forest-script.jpg",
+      "thumb": "photos/forest-script-s.jpg",
+      "w": 1920,
+      "h": 1920,
+      "hero": false
+    },
+    {
+      "id": "growth-through-glass",
+      "title": {
+        "he": "צמיחה מבעד לזכוכית",
+        "en": "Growth Through Glass"
+      },
+      "medium": {
+        "he": "דיו על נייר",
+        "en": "Ink on paper"
+      },
+      "size": "38×32",
+      "src": "photos/growth-through-glass.jpg",
+      "thumb": "photos/growth-through-glass-s.jpg",
+      "w": 1688,
+      "h": 2000,
+      "hero": false
+    },
+    {
+      "id": "bands-of-landscape",
+      "title": {
+        "he": "רצועות נוף",
+        "en": "Bands of Landscape"
+      },
+      "medium": {
+        "he": "דיו על נייר",
+        "en": "Ink on paper"
+      },
+      "size": "35×20",
+      "src": "photos/bands-of-landscape.jpg",
+      "thumb": "photos/bands-of-landscape-s.jpg",
+      "w": 1920,
+      "h": 1080,
+      "hero": true
+    },
+    {
+      "id": "lines-of-mending",
+      "title": {
+        "he": "קווי איחוי",
+        "en": "Lines of Mending"
+      },
+      "medium": {
+        "he": "דיו על נייר",
+        "en": "Ink on paper"
+      },
+      "size": "40×55",
+      "src": "photos/lines-of-mending.jpg",
+      "thumb": "photos/lines-of-mending-s.jpg",
+      "w": 1161,
+      "h": 1600,
+      "hero": true
+    },
+    {
+      "id": "inner-circle",
+      "title": {
+        "he": "מעגל פנימי",
+        "en": "Inner Circle"
+      },
+      "medium": {
+        "he": "דיו על לוח קרטון",
+        "en": "Ink on board"
+      },
+      "size": "45×41",
+      "src": "photos/inner-circle.jpg",
+      "thumb": "photos/inner-circle-s.jpg",
+      "w": 1920,
+      "h": 1755,
+      "hero": false
+    },
+    {
+      "id": "flowchart",
+      "title": {
+        "he": "תרשים זרימה",
+        "en": "Flowchart"
+      },
+      "medium": {
+        "he": "דיו על לוח קרטון",
+        "en": "Ink on board"
+      },
+      "size": "60×45",
+      "src": "photos/flowchart.jpg",
+      "thumb": "photos/flowchart-s.jpg",
+      "w": 1920,
+      "h": 1440,
+      "hero": false
+    },
+    {
+      "id": "living-rust",
+      "title": {
+        "he": "חלודה חיה",
+        "en": "Living Rust"
+      },
+      "medium": {
+        "he": "דיו על לוח קרטון",
+        "en": "Ink on board"
+      },
+      "size": "38×50",
+      "src": "photos/living-rust.jpg",
+      "thumb": "photos/living-rust-s.jpg",
+      "w": 1482,
+      "h": 1975,
+      "hero": true
+    },
+    {
+      "id": "waves-of-gold",
+      "title": {
+        "he": "גלי זהב",
+        "en": "Waves of Gold"
+      },
+      "medium": {
+        "he": "דיו על נייר",
+        "en": "Ink on paper"
+      },
+      "size": "45×60",
+      "src": "photos/waves-of-gold.jpg",
+      "thumb": "photos/waves-of-gold-s.jpg",
+      "w": 1501,
+      "h": 2000,
+      "hero": true
+    }
   ],
   "texts": []
 }
