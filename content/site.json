@@ -48,7 +48,8 @@
       "h": 1971,
       "hero": false,
       "project": "pmwgz0lhv",
-      "year": "2021"
+      "year": "2021",
+      "projectOnly": true
     },
     {
       "id": "bands-of-landscape",
