@@ -110,25 +110,6 @@
       "display": "large"
     },
     {
-      "id": "wmwgov1wu1",
-      "title": {
-        "he": "מקום חסר",
-        "en": "Missing place"
-      },
-      "medium": {
-        "he": "",
-        "en": ""
-      },
-      "size": "60×60",
-      "src": "photos/wmwgov1wu1.jpg",
-      "thumb": "photos/wmwgov1wu1-s.jpg",
-      "w": 2400,
-      "h": 2400,
-      "hero": true,
-      "year": "2025",
-      "display": "large"
-    },
-    {
       "id": "wmwgnrove1",
       "title": {
         "he": "מעלות אור",
@@ -146,6 +127,25 @@
       "hero": false,
       "year": "2026",
       "display": "medium"
+    },
+    {
+      "id": "wmwgov1wu1",
+      "title": {
+        "he": "מקום חסר",
+        "en": "Missing place"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "60×60",
+      "src": "photos/wmwgov1wu1.jpg",
+      "thumb": "photos/wmwgov1wu1-s.jpg",
+      "w": 2400,
+      "h": 2400,
+      "hero": true,
+      "year": "2025",
+      "display": "large"
     },
     {
       "id": "wmwgq0mum1",
