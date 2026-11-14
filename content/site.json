@@ -66,7 +66,8 @@
       "h": 1440,
       "hero": false,
       "project": "pmwgtpfnj",
-      "display": "medium"
+      "display": "medium",
+      "year": "2026"
     },
     {
       "id": "wmwgpvsem1",
@@ -200,7 +201,8 @@
       "w": 2000,
       "h": 1414,
       "hero": false,
-      "project": "pmwgtpfnj"
+      "project": "pmwgtpfnj",
+      "year": "2026"
     },
     {
       "id": "forest-script",
@@ -217,7 +219,8 @@
       "thumb": "photos/forest-script-s.jpg",
       "w": 1920,
       "h": 1920,
-      "hero": true
+      "hero": true,
+      "year": "2024"
     },
     {
       "id": "growth-through-glass",
@@ -234,7 +237,8 @@
       "thumb": "photos/growth-through-glass-s.jpg",
       "w": 1688,
       "h": 2000,
-      "hero": false
+      "hero": false,
+      "year": "2025"
     },
     {
       "id": "lines-of-mending",
@@ -271,7 +275,8 @@
       "thumb": "photos/inner-circle-s.jpg",
       "w": 1920,
       "h": 1755,
-      "hero": false
+      "hero": false,
+      "year": "2024"
     },
     {
       "id": "flowchart",
@@ -288,7 +293,8 @@
       "thumb": "photos/flowchart-s.jpg",
       "w": 1920,
       "h": 1440,
-      "hero": false
+      "hero": false,
+      "year": "2026"
     },
     {
       "id": "living-rust",
@@ -305,7 +311,8 @@
       "thumb": "photos/living-rust-s.jpg",
       "w": 1482,
       "h": 1975,
-      "hero": true
+      "hero": true,
+      "year": "2025"
     },
     {
       "id": "waves-of-gold",
