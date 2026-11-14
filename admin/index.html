@@ -38,12 +38,12 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
 .status { font-size: 14px; }
 .status.err { color: #a12a12; font-weight: 600; }
 .hint { font-size: 14px; color: var(--mute); margin: 0 0 16px; }
-.connect { border: 1.5px solid var(--line); padding: 14px 18px; margin-top: 48px; }
-.connect[open] { border-color: var(--ink); }
+.connect { border: 2px solid var(--ink); padding: 18px; }
+.connect[hidden] { display: none; }
 summary { cursor: pointer; font-weight: 600; min-height: 32px; }
 .connect summary { margin-bottom: 0; }
 .connect[open] summary { margin-bottom: 12px; }
-#c-state { font-weight: 400; color: var(--mute); font-size: 14px; }
+#c-state { font-weight: 400; font-size: 14px; opacity: .75; }
 details.card > summary { display: flex; align-items: center; gap: 12px; list-style: none; }
 details.card > summary::-webkit-details-marker { display: none; }
 details.card > summary::before { content: '+'; font-size: 22px; line-height: 1; width: 18px; }
@@ -70,10 +70,11 @@ details.card[open] > summary { margin-bottom: 14px; }
     <button role="tab" data-tab="works" aria-selected="true">עבודות</button>
     <button role="tab" data-tab="texts" aria-selected="false">טקסטים</button>
     <button role="tab" data-tab="general" aria-selected="false">כללי</button>
+    <button role="tab" data-tab="connect" aria-selected="false">חיבור <span id="c-state"></span></button>
   </div>
   <section id="panel"></section>
-  <details class="connect" id="connect">
-    <summary>חיבור ל־GitHub <span id="c-state"></span></summary>
+  <div class="connect" id="connect" hidden>
+    <h2>חיבור ל־GitHub</h2>
     <p class="hint">השינויים נשמרים ישירות בריפו של האתר. צריך טוקן אישי (Fine-grained token) עם הרשאת Contents: Read and write לריפו הזה בלבד. הטוקן נשמר רק בדפדפן הזה.</p>
     <div class="grid">
       <div><label for="c-owner">בעלים (owner)</label><input type="text" id="c-owner" dir="ltr" autocomplete="off"></div>
@@ -82,7 +83,7 @@ details.card[open] > summary { margin-bottom: 14px; }
       <div><label for="c-token">טוקן</label><input type="password" id="c-token" dir="ltr" autocomplete="off"></div>
     </div>
     <p style="margin:14px 0 0;display:flex;gap:8px;flex-wrap:wrap"><button class="primary" id="c-go">התחברות</button><button id="c-out">ניתוק ומחיקת הטוקן</button></p>
-  </details>
+  </div>
 </main>
 
 <script>
@@ -99,7 +100,7 @@ details.card[open] > summary { margin-bottom: 14px; }
   const removed = new Set();   // repo paths to delete on save
 
   const status = (msg, err) => { $('status').textContent = msg || ''; $('status').className = 'status' + (err ? ' err' : ''); };
-  const syncBox = (forceOpen) => { $('c-state').textContent = connected ? '· מחובר' : '· לא מחובר'; if (forceOpen !== undefined) $('connect').open = forceOpen; };
+  const syncBox = (show) => { $('c-state').textContent = connected ? '· מחובר' : '· לא מחובר'; if (show === true) tab = 'connect'; else if (show === false && tab === 'connect') tab = 'works'; };
   const openProjects = new Set();
   const markDirty = () => { dirty = true; $('save').disabled = !connected; status(connected ? 'יש שינויים שלא נשמרו' : 'יש שינויים. התחבר כדי לשמור'); };
 
@@ -126,7 +127,7 @@ details.card[open] > summary { margin-bottom: 14px; }
       localStorage.setItem(LS, JSON.stringify(cfg));
       status('מחובר'); $('save').disabled = true; syncBox(false); draw();
     } catch (e) {
-      connected = false; syncBox(true);
+      connected = false; syncBox(true); draw();
       status(e.status === 401 ? 'הטוקן לא תקין או פג תוקף' : e.status === 404 ? 'הריפו או הקובץ לא נמצאו (או שלטוקן אין גישה)' : 'החיבור נכשל: ' + e.message, true);
     }
   }
@@ -193,6 +194,9 @@ details.card[open] > summary { margin-bottom: 14px; }
 
   function draw() {
     document.querySelectorAll('[role=tab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === tab)));
+    $('connect').hidden = tab !== 'connect';
+    $('panel').hidden = tab === 'connect';
+    if (tab === 'connect') return;
     if (!data) { $('panel').innerHTML = '<p class="hint">טוען…</p>'; return; }
     if (tab === 'works') {
       $('panel').innerHTML = `<label class="drop" id="drop"><input type="file" id="files" accept="image/*" multiple>הוספת תמונות: לחיצה או גרירה לכאן</label>
@@ -265,7 +269,7 @@ details.card[open] > summary { margin-bottom: 14px; }
   document.querySelectorAll('[role=tab]').forEach((b) => { b.onclick = () => { tab = b.dataset.tab; draw(); }; });
   $('save').onclick = save;
   $('c-go').onclick = connect;
-  $('c-out').onclick = () => { localStorage.removeItem(LS); cfg = {}; connected = false; $('c-token').value = ''; $('save').disabled = true; syncBox(true); status('נותקת. הטוקן נמחק מהדפדפן.'); };
+  $('c-out').onclick = () => { localStorage.removeItem(LS); cfg = {}; connected = false; $('c-token').value = ''; $('save').disabled = true; syncBox(true); draw(); status('נותקת. הטוקן נמחק מהדפדפן.'); };
   window.addEventListener('beforeunload', (e) => { if (dirty) e.preventDefault(); });
 
   /* ---------- start ---------- */
@@ -274,7 +278,7 @@ details.card[open] > summary { margin-bottom: 14px; }
   $('c-repo').value = cfg.repo || guess.repo || '';
   $('c-branch').value = cfg.branch || 'main';
   $('c-token').value = cfg.token || '';
-  syncBox(!cfg.token);
+  syncBox(!cfg.token); draw();
   if (cfg.token) connect();
   else fetch('../' + FILE, { cache: 'no-cache' }).then((r) => r.json()).then((d) => { data = d; data.texts ??= []; data.projects ??= []; draw(); status('מצב תצוגה. התחבר כדי לשמור'); }).catch(() => status('לא הצלחתי לטעון את התוכן', true));
 })();
