@@ -32,6 +32,25 @@
   },
   "works": [
     {
+      "id": "wmwh06mgf1",
+      "title": {
+        "he": "כל אחת בשלה",
+        "en": "Each in Her Own World"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "60×34",
+      "src": "photos/wmwh06mgf1.jpg",
+      "thumb": "photos/wmwh06mgf1-s.jpg",
+      "w": 2400,
+      "h": 1349,
+      "hero": false,
+      "project": "pmwgz0lhv",
+      "projectOnly": true
+    },
+    {
       "id": "wmwh04i5l1",
       "title": {
         "he": "עניין שבשגרה",
