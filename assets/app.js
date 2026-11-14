@@ -20,7 +20,7 @@
   const t = (o) => (o && (o[lang] || o.he || o.en)) || '';
   const other = (o) => (o && o[lang === 'he' ? 'en' : 'he']) || '';
   const pad = (n) => String(n).padStart(2, '0');
-  const meta = (w) => [t(w.medium), w.size ? `<bdi dir="ltr">${esc(w.size)}</bdi> ${UI[lang].cm}` : '', w.year].filter(Boolean).join(' · ');
+  const meta = (w) => [t(w.medium), w.size ? `<bdi dir="ltr">${esc(String(w.size).replace(/\s*[xX*×]\s*/, '×'))}</bdi> ${UI[lang].cm}` : '', w.year].filter(Boolean).join(' · ');
 
   function workHtml(w, i, big, n) {
     const img = `<img src="${esc(w.thumb || w.src)}" alt="${esc(t(w.title))}" width="${w.w || ''}" height="${w.h || ''}" loading="lazy">`;

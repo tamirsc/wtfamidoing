@@ -50,6 +50,9 @@ summary { cursor: pointer; font-weight: 600; min-height: 32px; }
 .drop input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .new { color: var(--accent); font-size: 13px; font-weight: 600; }
 .grid[hidden] { display: none; }
+.dims { display: flex; align-items: flex-end; gap: 8px; }
+.dims span { flex: 1; min-width: 0; }
+.dims b { padding-bottom: 11px; font-size: 18px; font-weight: 400; }
 button.armed { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
 .card.proj:not(.open) .card-head { margin-bottom: 0; }
 .card.proj .card-head { align-items: center; }
@@ -214,6 +217,10 @@ button.armed { background: var(--accent); border-color: var(--accent); color: #f
   const delBtn = (act, i) => armed === act + ':' + i
     ? `<button class="small danger armed" data-act="${act}" data-i="${i}">לאשר מחיקה</button><button class="small" data-act="cancel-del">ביטול</button>`
     : `<button class="small danger" data-act="${act}" data-i="${i}">מחיקה</button>`;
+  const splitSize = (v) => { const p = String(v || '').split(/\s*[×xX*]\s*/); return [p[0] || '', p[1] || '']; };
+  const dims = (w, i) => { const [a, b] = splitSize(w.size); return `<div><label>מידות (ס״מ)</label><div class="dims">
+    <span><label for="f-dw-${i}">רוחב</label><input type="text" inputmode="decimal" dir="ltr" id="f-dw-${i}" data-dim="${i}" value="${esc(a)}"></span><b aria-hidden="true">×</b>
+    <span><label for="f-dh-${i}">גובה</label><input type="text" inputmode="decimal" dir="ltr" id="f-dh-${i}" data-dim="${i}" value="${esc(b)}"></span></div></div>`; };
   const imgUrl = (p) => previews.get(p) || '../' + p;
 
   function draw() {
@@ -232,7 +239,7 @@ button.armed { background: var(--accent); border-color: var(--accent); color: #f
         data.works.map((w, i) => `<div class="card"><div class="card-head"><img src="${esc(imgUrl(w.thumb || w.src))}" alt="">
           <div>${pending.has(w.src) ? '<span class="new">חדש · טרם פורסם</span>' : ''}<label class="check"><input type="checkbox" data-path="works.${i}.hero"${w.hero ? ' checked' : ''}> ברצועות הפתיחה</label></div>
           <div class="card-tools"><button class="small" data-act="up" data-i="${i}" aria-label="הזזה למעלה">↑</button><button class="small" data-act="down" data-i="${i}" aria-label="הזזה למטה">↓</button>${delBtn('del-work', i)}</div></div>
-          <div class="grid">${field('שם (עברית)', `works.${i}.title.he`)}${field('Title (English)', `works.${i}.title.en`, { ltr: 1 })}${field('טכניקה (עברית)', `works.${i}.medium.he`)}${field('Medium (English)', `works.${i}.medium.en`, { ltr: 1 })}${field('מידות בס״מ, למשל 67×50', `works.${i}.size`, { ltr: 1 })}${field('שנה', `works.${i}.year`, { ltr: 1 })}<div><label for="f-disp-${i}">גודל תצוגה באתר</label><select id="f-disp-${i}" data-path="works.${i}.display">${[['', 'אוטומטי'], ['large', 'גדולה: לבד בשורה'], ['medium', 'בינונית'], ['small', 'קטנה: לצד עבודה נוספת']].map(([v, l]) => `<option value="${v}"${(w.display || '') === v ? ' selected' : ''}>${l}</option>`).join('')}</select></div><div><label for="f-proj-${i}">פרויקט</label><select id="f-proj-${i}" data-path="works.${i}.project"><option value="">ללא פרויקט</option>${data.projects.map((p) => `<option value="${esc(p.id)}"${p.id === w.project ? ' selected' : ''}>${esc(p.title.he || p.title.en || p.id)}</option>`).join('')}</select></div></div></div>`).join('');
+          <div class="grid">${field('שם (עברית)', `works.${i}.title.he`)}${field('Title (English)', `works.${i}.title.en`, { ltr: 1 })}${field('טכניקה (עברית)', `works.${i}.medium.he`)}${field('Medium (English)', `works.${i}.medium.en`, { ltr: 1 })}${dims(w, i)}${field('שנה', `works.${i}.year`, { ltr: 1 })}<div><label for="f-disp-${i}">גודל תצוגה באתר</label><select id="f-disp-${i}" data-path="works.${i}.display">${[['', 'אוטומטי'], ['large', 'גדולה: לבד בשורה'], ['medium', 'בינונית'], ['small', 'קטנה: לצד עבודה נוספת']].map(([v, l]) => `<option value="${v}"${(w.display || '') === v ? ' selected' : ''}>${l}</option>`).join('')}</select></div><div><label for="f-proj-${i}">פרויקט</label><select id="f-proj-${i}" data-path="works.${i}.project"><option value="">ללא פרויקט</option>${data.projects.map((p) => `<option value="${esc(p.id)}"${p.id === w.project ? ' selected' : ''}>${esc(p.title.he || p.title.en || p.id)}</option>`).join('')}</select></div></div></div>`).join('');
       $('files').onchange = (e) => addPhotos(e.target.files);
       const d = $('drop');
       d.ondragover = (e) => { e.preventDefault(); d.classList.add('over'); };
@@ -255,7 +262,12 @@ button.armed { background: var(--accent); border-color: var(--accent); color: #f
   }
 
   $('panel').addEventListener('input', (e) => {
-    const el = e.target; if (!el.dataset.path) return;
+    const el = e.target;
+    if (el.dataset.dim !== undefined) {   // width and height are stored together as "W×H"
+      const i = el.dataset.dim, a = $('f-dw-' + i).value.trim(), b = $('f-dh-' + i).value.trim();
+      data.works[i].size = a && b ? `${a}×${b}` : a || b; markDirty(); return;
+    }
+    if (!el.dataset.path) return;
     const v = el.type === 'checkbox' ? el.checked : el.dataset.paras ? el.value.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : el.value;
     setPath(el.dataset.path, v); markDirty();
   });
