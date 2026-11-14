@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ניהול האתר</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karantina:wght@700&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&display=swap">
+<style>
+:root { --paper: #f1f0ec; --ink: #121212; --mute: #4a4a47; --accent: #b5441f; --line: #cfcdc5; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans Hebrew', system-ui, sans-serif; font-size: 16px; line-height: 1.5; }
+header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 18px 20px; border-bottom: 2px solid var(--ink); position: sticky; top: 0; background: var(--paper); z-index: 5; }
+h1 { margin: 0; font-family: 'Karantina', sans-serif; font-size: 44px; line-height: 1; }
+main { max-width: 900px; margin: 0 auto; padding: 24px 20px 120px; }
+button, input, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 1.5px solid var(--ink); padding: 10px 16px; min-height: 44px; }
+button:hover { background: var(--ink); color: var(--paper); }
+button.primary { background: var(--ink); color: var(--paper); font-weight: 600; }
+button.primary:hover { background: var(--accent); border-color: var(--accent); }
+button.primary:disabled { opacity: .45; cursor: default; background: var(--ink); border-color: var(--ink); }
+button.small { padding: 6px 10px; min-height: 40px; min-width: 40px; font-size: 14px; }
+button.danger:hover { background: var(--accent); border-color: var(--accent); }
+label { display: block; font-size: 13px; font-weight: 500; color: var(--mute); margin-bottom: 4px; }
+input[type=text], input[type=password], input[type=date], textarea, select { width: 100%; padding: 10px 12px; border: 1.5px solid var(--line); background: #fff; border-radius: 0; }
+input:focus, textarea:focus, select:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
+textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
+[dir=ltr] { text-align: left; }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.tabs button[aria-selected=true] { background: var(--ink); color: var(--paper); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px 16px; }
+.card { border: 1.5px solid var(--line); background: #faf9f6; padding: 16px; margin-bottom: 16px; }
+.card-head { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 14px; }
+.card-head img { width: 120px; height: 120px; object-fit: cover; background: #ddd; flex: none; }
+.card-tools { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-inline-start: auto; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink); min-height: 40px; }
+.check input { width: 20px; height: 20px; }
+.status { font-size: 14px; }
+.status.err { color: #a12a12; font-weight: 600; }
+.hint { font-size: 14px; color: var(--mute); margin: 0 0 16px; }
+.connect { border: 2px solid var(--ink); padding: 18px; margin-bottom: 28px; }
+.connect h2, section h2 { margin: 0 0 12px; font-size: 18px; }
+.drop { display: block; border: 2px dashed var(--ink); padding: 28px; text-align: center; font-weight: 600; font-size: 16px; color: var(--ink); cursor: pointer; margin-bottom: 20px; }
+.drop:hover, .drop.over { background: #e4e2da; }
+.drop input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.new { color: var(--accent); font-size: 13px; font-weight: 600; }
+</style>
+</head>
+<body>
+<header>
+  <h1>ניהול האתר</h1>
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+    <span class="status" id="status" role="status"></span>
+    <a href="../" target="_blank" rel="noopener">לאתר ↗</a>
+    <button class="primary" id="save" disabled>שמירה ופרסום</button>
+  </div>
+</header>
+<main>
+  <div class="connect" id="connect">
+    <h2>חיבור ל־GitHub</h2>
+    <p class="hint">השינויים נשמרים ישירות בריפו של האתר. צריך טוקן אישי (Fine-grained token) עם הרשאת Contents: Read and write לריפו הזה בלבד. הטוקן נשמר רק בדפדפן הזה.</p>
+    <div class="grid">
+      <div><label for="c-owner">בעלים (owner)</label><input type="text" id="c-owner" dir="ltr" autocomplete="off"></div>
+      <div><label for="c-repo">ריפו</label><input type="text" id="c-repo" dir="ltr" autocomplete="off"></div>
+      <div><label for="c-branch">ענף</label><input type="text" id="c-branch" dir="ltr" value="main" autocomplete="off"></div>
+      <div><label for="c-token">טוקן</label><input type="password" id="c-token" dir="ltr" autocomplete="off"></div>
+    </div>
+    <p style="margin:14px 0 0;display:flex;gap:8px;flex-wrap:wrap"><button class="primary" id="c-go">התחברות</button><button id="c-out">ניתוק ומחיקת הטוקן</button></p>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" data-tab="works" aria-selected="true">עבודות</button>
+    <button role="tab" data-tab="texts" aria-selected="false">טקסטים</button>
+    <button role="tab" data-tab="general" aria-selected="false">כללי</button>
+  </div>
+  <section id="panel"></section>
+</main>
+
+<script>
+(() => {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const FILE = 'content/site.json';
+  const LS = 'site-admin';
+  let cfg = {}; try { cfg = JSON.parse(localStorage.getItem(LS) || '{}'); } catch { cfg = {}; }
+  let data = null, sha = null, tab = 'works', dirty = false, connected = false;
+  const pending = new Map();   // repo path -> base64 content waiting to be uploaded
+  const previews = new Map();  // repo path -> object URL for images not yet published
+  const removed = new Set();   // repo paths to delete on save
+
+  const status = (msg, err) => { $('status').textContent = msg || ''; $('status').className = 'status' + (err ? ' err' : ''); };
+  const markDirty = () => { dirty = true; $('save').disabled = !connected; status(connected ? 'יש שינויים שלא נשמרו' : 'יש שינויים. התחבר כדי לשמור'); };
+
+  /* ---------- GitHub ---------- */
+  const b64encode = (str) => { const bytes = new TextEncoder().encode(str); let bin = ''; bytes.forEach((b) => { bin += String.fromCharCode(b); }); return btoa(bin); };
+  const b64decode = (b64) => new TextDecoder().decode(Uint8Array.from(atob(b64.replace(/\s/g, '')), (c) => c.charCodeAt(0)));
+  async function gh(path, opts = {}) {
+    const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}` + (opts.method ? '' : `?ref=${encodeURIComponent(cfg.branch)}&t=${Date.now()}`);
+    const res = await fetch(url, { ...opts, headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${cfg.token}`, 'X-GitHub-Api-Version': '2022-11-28' } });
+    if (!res.ok) { const e = new Error(`GitHub ${res.status}`); e.status = res.status; throw e; }
+    return res.json();
+  }
+  const put = (path, content, message, fileSha) => gh(path, { method: 'PUT', body: JSON.stringify({ message, content, branch: cfg.branch, ...(fileSha ? { sha: fileSha } : {}) }) });
+
+  async function connect() {
+    cfg = { owner: $('c-owner').value.trim(), repo: $('c-repo').value.trim(), branch: $('c-branch').value.trim() || 'main', token: $('c-token').value.trim() };
+    if (!cfg.owner || !cfg.repo || !cfg.token) { status('חסרים פרטי חיבור', true); return; }
+    status('מתחבר…');
+    try {
+      const f = await gh(FILE);
+      if (dirty && !confirm('יש שינויים שלא נשמרו. לטעון מחדש מהריפו ולאבד אותם?')) return;
+      data = JSON.parse(b64decode(f.content)); sha = f.sha; connected = true; dirty = false;
+      pending.clear(); removed.clear();
+      localStorage.setItem(LS, JSON.stringify(cfg));
+      status('מחובר'); $('save').disabled = true; draw();
+    } catch (e) {
+      connected = false;
+      status(e.status === 401 ? 'הטוקן לא תקין או פג תוקף' : e.status === 404 ? 'הריפו או הקובץ לא נמצאו (או שלטוקן אין גישה)' : 'החיבור נכשל: ' + e.message, true);
+    }
+  }
+
+  async function save() {
+    if (!connected || !dirty) return;
+    $('save').disabled = true;
+    try {
+      let n = 0;
+      for (const [path, content] of pending) { n += 1; status(`מעלה תמונות ${n}/${pending.size}…`); await put(path, content, `Add ${path}`); pending.delete(path); }
+      status('שומר תוכן…');
+      const res = await put(FILE, b64encode(JSON.stringify(data, null, 2) + '\n'), 'Update site content', sha);
+      sha = res.content.sha;
+      for (const path of removed) {
+        try { const f = await gh(path); await gh(path, { method: 'DELETE', body: JSON.stringify({ message: `Remove ${path}`, sha: f.sha, branch: cfg.branch }) }); } catch { /* already gone */ }
+        removed.delete(path);
+      }
+      dirty = false; status('נשמר. האתר יתעדכן תוך דקה או שתיים.');
+    } catch (e) {
+      $('save').disabled = false;
+      status(e.status === 409 ? 'הקובץ השתנה בינתיים בריפו. התחבר מחדש ונסה שוב.' : 'השמירה נכשלה: ' + e.message, true);
+    }
+  }
+
+  /* ---------- images ---------- */
+  async function resize(file, max, quality) {
+    const bmp = await createImageBitmap(file, { imageOrientation: 'from-image' });
+    const k = Math.min(1, max / Math.max(bmp.width, bmp.height));
+    const w = Math.round(bmp.width * k), h = Math.round(bmp.height * k);
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    c.getContext('2d').drawImage(bmp, 0, 0, w, h);
+    const blob = await new Promise((r) => c.toBlob(r, 'image/jpeg', quality));
+    const b64 = await new Promise((r) => { const fr = new FileReader(); fr.onload = () => r(fr.result.split(',')[1]); fr.readAsDataURL(blob); });
+    return { b64, w, h, url: URL.createObjectURL(blob) };
+  }
+  async function addPhotos(files) {
+    const list = [...files].filter((f) => f.type.startsWith('image/'));
+    let n = 0;
+    for (const f of list) {
+      n += 1; status(`מעבד תמונה ${n}/${list.length}…`);
+      try {
+        const id = 'w' + Date.now().toString(36) + n;
+        const full = await resize(f, 2400, 0.88), small = await resize(f, 1000, 0.8);
+        const src = `photos/${id}.jpg`, thumb = `photos/${id}-s.jpg`;
+        pending.set(src, full.b64); pending.set(thumb, small.b64); previews.set(thumb, small.url);
+        const last = data.works[data.works.length - 1];
+        data.works.unshift({ id, title: { he: '', en: '' }, medium: last ? { ...last.medium } : { he: '', en: '' }, size: '', src, thumb, w: full.w, h: full.h, hero: false });
+      } catch { status(`לא הצלחתי לקרוא את ${f.name}`, true); }
+    }
+    markDirty(); draw();
+  }
+
+  /* ---------- editing ---------- */
+  const getPath = (p) => p.split('.').reduce((o, k) => (o == null ? o : o[k]), data);
+  function setPath(p, v) { const keys = p.split('.'); const last = keys.pop(); const o = keys.reduce((x, k) => (x[k] ??= {}), data); o[last] = v; }
+  const field = (label, path, opts = {}) => {
+    const v = getPath(path) ?? '', dir = opts.ltr ? ' dir="ltr"' : '', id = 'f-' + path.replace(/\./g, '-');
+    const val = opts.paras ? (Array.isArray(v) ? v.join('\n\n') : v) : v;
+    return `<div><label for="${id}">${label}</label>` + (opts.area
+      ? `<textarea id="${id}" data-path="${path}"${opts.paras ? ' data-paras="1"' : ''}${dir}>${esc(val)}</textarea>`
+      : `<input type="${opts.type || 'text'}" id="${id}" data-path="${path}"${dir} value="${esc(val)}">`) + '</div>';
+  };
+  const imgUrl = (p) => previews.get(p) || '../' + p;
+
+  function draw() {
+    document.querySelectorAll('[role=tab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === tab)));
+    if (!data) { $('panel').innerHTML = '<p class="hint">טוען…</p>'; return; }
+    if (tab === 'works') {
+      $('panel').innerHTML = `<label class="drop" id="drop"><input type="file" id="files" accept="image/*" multiple>הוספת תמונות: לחיצה או גרירה לכאן</label>
+        <p class="hint">התמונות מוקטנות אוטומטית (עד 2400 פיקסלים) לפני ההעלאה. ״ברצועות הפתיחה״ קובע אילו 4 עבודות יופיעו בראש דף הבית.</p>` +
+        data.works.map((w, i) => `<div class="card"><div class="card-head"><img src="${esc(imgUrl(w.thumb || w.src))}" alt="">
+          <div>${pending.has(w.src) ? '<span class="new">חדש · טרם פורסם</span>' : ''}<label class="check"><input type="checkbox" data-path="works.${i}.hero"${w.hero ? ' checked' : ''}> ברצועות הפתיחה</label></div>
+          <div class="card-tools"><button class="small" data-act="up" data-i="${i}" aria-label="הזזה למעלה">↑</button><button class="small" data-act="down" data-i="${i}" aria-label="הזזה למטה">↓</button><button class="small danger" data-act="del-work" data-i="${i}">מחיקה</button></div></div>
+          <div class="grid">${field('שם (עברית)', `works.${i}.title.he`)}${field('Title (English)', `works.${i}.title.en`, { ltr: 1 })}${field('טכניקה (עברית)', `works.${i}.medium.he`)}${field('Medium (English)', `works.${i}.medium.en`, { ltr: 1 })}${field('מידות בס״מ, למשל 67×50', `works.${i}.size`, { ltr: 1 })}${field('שנה', `works.${i}.year`, { ltr: 1 })}</div></div>`).join('');
+      $('files').onchange = (e) => addPhotos(e.target.files);
+      const d = $('drop');
+      d.ondragover = (e) => { e.preventDefault(); d.classList.add('over'); };
+      d.ondragleave = () => d.classList.remove('over');
+      d.ondrop = (e) => { e.preventDefault(); d.classList.remove('over'); addPhotos(e.dataTransfer.files); };
+    } else if (tab === 'texts') {
+      const opts = (sel) => '<option value="">ללא תמונה</option>' + data.works.map((w) => `<option value="${esc(w.id)}"${w.id === sel ? ' selected' : ''}>${esc(w.title.he || w.title.en || w.id)}</option>`).join('');
+      $('panel').innerHTML = `<p><button class="primary" data-act="add-text">טקסט חדש</button></p><p class="hint">שורה ריקה בין פסקאות. אפשר למלא רק עברית; האנגלית תציג את העברית עד שתתורגם.</p>` +
+        (data.texts.length ? '' : '<p class="hint">עדיין אין טקסטים.</p>') +
+        data.texts.map((x, i) => `<div class="card"><div class="card-head"><strong>${esc(x.title.he || x.title.en || 'טקסט ללא שם')}</strong>
+          <div class="card-tools"><button class="small" data-act="t-up" data-i="${i}" aria-label="הזזה למעלה">↑</button><button class="small" data-act="t-down" data-i="${i}" aria-label="הזזה למטה">↓</button><button class="small danger" data-act="del-text" data-i="${i}">מחיקה</button></div></div>
+          <div class="grid">${field('כותרת (עברית)', `texts.${i}.title.he`)}${field('Title (English)', `texts.${i}.title.en`, { ltr: 1 })}${field('תאריך', `texts.${i}.date`, { type: 'date', ltr: 1 })}
+          <div><label for="f-img-${i}">תמונה מלווה</label><select id="f-img-${i}" data-path="texts.${i}.image">${opts(x.image)}</select></div></div>
+          <div class="grid" style="margin-top:12px">${field('הטקסט (עברית)', `texts.${i}.body.he`, { area: 1 })}${field('Text (English)', `texts.${i}.body.en`, { area: 1, ltr: 1 })}</div></div>`).join('');
+    } else {
+      $('panel').innerHTML = `<div class="card"><h2>פתיחה</h2><div class="grid">${field('משפט פתיחה (עברית)', 'tagline.he')}${field('Tagline (English)', 'tagline.en', { ltr: 1 })}${field('ציטוט מודגש (עברית)', 'quote.he')}${field('Pull quote (English)', 'quote.en', { ltr: 1 })}</div></div>
+        <div class="card"><h2>אודות</h2><div class="grid">${field('אודות (עברית)', 'about.he', { area: 1, paras: 1 })}${field('About (English)', 'about.en', { area: 1, paras: 1, ltr: 1 })}</div></div>
+        <div class="card"><h2>קשר</h2><div class="grid">${field('אימייל', 'contact.email', { ltr: 1 })}${field('אינסטגרם (קישור)', 'contact.instagram', { ltr: 1 })}${field('קישור לרכישה', 'contact.shop', { ltr: 1 })}</div></div>`;
+    }
+  }
+
+  $('panel').addEventListener('input', (e) => {
+    const el = e.target; if (!el.dataset.path) return;
+    const v = el.type === 'checkbox' ? el.checked : el.dataset.paras ? el.value.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : el.value;
+    setPath(el.dataset.path, v); markDirty();
+  });
+  $('panel').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-act]'); if (!b) return;
+    const i = Number(b.dataset.i), act = b.dataset.act;
+    const move = (arr, d) => { const j = i + d; if (j < 0 || j >= arr.length) return; [arr[i], arr[j]] = [arr[j], arr[i]]; };
+    if (act === 'up') move(data.works, -1);
+    else if (act === 'down') move(data.works, 1);
+    else if (act === 't-up') move(data.texts, -1);
+    else if (act === 't-down') move(data.texts, 1);
+    else if (act === 'del-work') {
+      const w = data.works[i];
+      if (!confirm(`למחוק את "${w.title.he || w.title.en || 'העבודה'}"?`)) return;
+      [w.src, w.thumb].filter(Boolean).forEach((p) => { if (pending.has(p)) pending.delete(p); else removed.add(p); });
+      data.works.splice(i, 1);
+    } else if (act === 'del-text') {
+      if (!confirm('למחוק את הטקסט?')) return;
+      data.texts.splice(i, 1);
+    } else if (act === 'add-text') {
+      data.texts.unshift({ id: 't' + Date.now().toString(36), title: { he: '', en: '' }, date: new Date().toISOString().slice(0, 10), image: '', body: { he: '', en: '' } });
+    }
+    markDirty(); draw();
+  });
+  document.querySelectorAll('[role=tab]').forEach((b) => { b.onclick = () => { tab = b.dataset.tab; draw(); }; });
+  $('save').onclick = save;
+  $('c-go').onclick = connect;
+  $('c-out').onclick = () => { localStorage.removeItem(LS); cfg = {}; connected = false; $('c-token').value = ''; $('save').disabled = true; status('נותקת. הטוקן נמחק מהדפדפן.'); };
+  window.addEventListener('beforeunload', (e) => { if (dirty) e.preventDefault(); });
+
+  /* ---------- start ---------- */
+  const guess = location.hostname.endsWith('.github.io') ? { owner: location.hostname.split('.')[0], repo: location.pathname.split('/')[1] || location.hostname } : {};
+  $('c-owner').value = cfg.owner || guess.owner || '';
+  $('c-repo').value = cfg.repo || guess.repo || '';
+  $('c-branch').value = cfg.branch || 'main';
+  $('c-token').value = cfg.token || '';
+  if (cfg.token) connect();
+  else fetch('../' + FILE, { cache: 'no-cache' }).then((r) => r.json()).then((d) => { data = d; data.texts ??= []; draw(); status('מצב תצוגה. התחבר כדי לשמור'); }).catch(() => status('לא הצלחתי לטעון את התוכן', true));
+})();
+</script>
+</body>
+</html>

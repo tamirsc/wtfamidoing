@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>תמיר שורץ · צילום</title>
+<meta name="description" content="תמיר שורץ, צלם. עבודות, סדרות וטקסטים. Tamir Schwarts, photographer.">
+<meta property="og:title" content="תמיר שורץ · צילום">
+<meta property="og:type" content="website">
+<meta property="og:image" content="photos/beyond-the-fence-s.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karantina:wght@400;700&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&family=Frank+Ruhl+Libre:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#works" data-ui="skip">דלג לעבודות</a>
+
+<nav class="nav">
+  <a class="nav-name" href="#top" data-bind="navname"></a>
+  <div class="nav-links">
+    <a href="#works" data-ui="works">עבודות</a>
+    <a href="#writing" data-ui="writing">טקסטים</a>
+    <a href="#about" data-ui="about">אודות</a>
+    <a href="#contact" data-ui="contact">קשר</a>
+    <button type="button" class="lang" id="lang" aria-label="Switch to English">EN</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <h1 class="hero-name" id="hero-name"></h1>
+  <div class="strips" id="strips"></div>
+  <div class="hero-foot">
+    <p class="tagline" data-bind="tagline"></p>
+    <p class="motto" data-ui="motto">צילום · קריעה · הרכבה מחדש</p>
+  </div>
+</header>
+
+<main>
+  <section class="works" id="works">
+    <div class="rule">
+      <h2 data-ui="works">עבודות</h2>
+      <span class="count" id="count"></span>
+    </div>
+    <div id="plates"></div>
+  </section>
+
+  <section class="writing" id="writing">
+    <div class="slip">
+      <p class="eyebrow" data-ui="writing">טקסטים</p>
+      <blockquote data-bind="quote"></blockquote>
+      <ul class="text-list" id="text-list"></ul>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="rule"><h2 data-ui="about">אודות</h2></div>
+    <div class="about-grid">
+      <img id="portrait" alt="" loading="lazy">
+      <div class="about-body" id="about-body"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" id="contact">
+  <a class="talk" id="talk" data-ui="talk">דברו איתי</a>
+  <div class="foot-links" id="foot-links"></div>
+</footer>
+
+<dialog class="viewer" id="viewer" aria-label="work">
+  <button type="button" class="v-close" id="v-close" aria-label="Close">×</button>
+  <button type="button" class="v-nav v-prev" id="v-prev" aria-label="Previous">→</button>
+  <img id="v-img" alt="">
+  <button type="button" class="v-nav v-next" id="v-next" aria-label="Next">←</button>
+  <div class="v-cap">
+    <span class="v-num" id="v-num"></span>
+    <span class="v-title" id="v-title"></span>
+    <span class="v-meta" id="v-meta"></span>
+  </div>
+</dialog>
+
+<dialog class="reader" id="reader">
+  <button type="button" class="v-close" id="r-close" aria-label="Close">×</button>
+  <article id="r-body"></article>
+</dialog>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "artist": { "he": "תמיר שורץ", "en": "Tamir Schwarts" },
+  "tagline": {
+    "he": "אני מצלם תוך כדי שיטוט, ונמשך למה שרוב האנשים עוברים לידו.",
+    "en": "I photograph while wandering, drawn to what most people walk past."
+  },
+  "quote": {
+    "he": "השבר הופך שם לחלק מהדימוי עצמו.",
+    "en": "There, the break becomes part of the image itself."
+  },
+  "about": {
+    "he": [
+      "אני מצלם תוך כדי שיטוט, ונמשך למה שרוב האנשים עוברים לידו: שרטוט של ענפים על קיר, משטח שהזמן סימן, צל שנשבר בזכוכית. דרך אור, צבע, מרקם וקומפוזיציה אני מחפש נקודת מבט שנותנת לדברים האלה נוכחות.",
+      "בעבודות שלי המוכר נע בין זיהוי להפשטה: מבנים הופכים למקצב של צורות, צמח נדמה לרישום וקיר מתקלף מתחזה למפה טופוגרפית. אני נמשך למפגש בין סדר לאי-סדר, בין עדינות לחספוס ובין השלם לשבור.",
+      "המפגש הזה מגיע לגוף בסדרת הקולאז׳ים, שבה אני מצלם עור וצלקות, ואז קורע, חותך ומרכיב מחדש את התצלום המודפס. השבר הופך שם לחלק מהדימוי עצמו.",
+      "אני רוצה ליצור צילומים שאפשר לחיות לצדם, לחזור אליהם ובכל מבט לגלות פרט נוסף."
+    ],
+    "en": [
+      "I photograph while wandering, drawn to what most people walk past: branches sketched across a wall, a surface marked by time, a shadow breaking in glass. Through light, colour, texture and composition I look for a point of view that gives these things presence.",
+      "In my work the familiar moves between recognition and abstraction: buildings become a rhythm of shapes, a plant reads as a drawing, a peeling wall passes for a topographic map. I am drawn to the meeting of order and disorder, of the delicate and the rough, of the whole and the broken.",
+      "That meeting reaches the body in the collage series, where I photograph skin and scars, then tear, cut and reassemble the printed photograph. There, the break becomes part of the image itself.",
+      "I want to make photographs you can live alongside, return to, and find another detail in with every look."
+    ]
+  },
+  "portrait": "photos/portrait.jpg",
+  "contact": {
+    "email": "tamirsc@gmail.com",
+    "instagram": "https://www.instagram.com/tamirsc/",
+    "shop": "https://www.under1000.com/he-IL/artists/%D7%AA%D7%9E%D7%99%D7%A8-%D7%A9%D7%95%D7%A8%D7%A5-3537e452"
+  },
+  "works": [
+    { "id": "beyond-the-fence", "title": { "he": "מעבר לגדר", "en": "Beyond the Fence" }, "medium": { "he": "דיו על לוח קרטון", "en": "Ink on board" }, "size": "67×50", "src": "photos/beyond-the-fence.jpg", "thumb": "photos/beyond-the-fence-s.jpg", "w": 1920, "h": 1440, "hero": false },
+    { "id": "forest-script", "title": { "he": "כתב יער", "en": "Forest Script" }, "medium": { "he": "דיו על נייר", "en": "Ink on paper" }, "size": "35×35", "src": "photos/forest-script.jpg", "thumb": "photos/forest-script-s.jpg", "w": 1920, "h": 1920, "hero": false },
+    { "id": "growth-through-glass", "title": { "he": "צמיחה מבעד לזכוכית", "en": "Growth Through Glass" }, "medium": { "he": "דיו על נייר", "en": "Ink on paper" }, "size": "38×32", "src": "photos/growth-through-glass.jpg", "thumb": "photos/growth-through-glass-s.jpg", "w": 1688, "h": 2000, "hero": false },
+    { "id": "bands-of-landscape", "title": { "he": "רצועות נוף", "en": "Bands of Landscape" }, "medium": { "he": "דיו על נייר", "en": "Ink on paper" }, "size": "35×20", "src": "photos/bands-of-landscape.jpg", "thumb": "photos/bands-of-landscape-s.jpg", "w": 1920, "h": 1080, "hero": true },
+    { "id": "lines-of-mending", "title": { "he": "קווי איחוי", "en": "Lines of Mending" }, "medium": { "he": "דיו על נייר", "en": "Ink on paper" }, "size": "40×55", "src": "photos/lines-of-mending.jpg", "thumb": "photos/lines-of-mending-s.jpg", "w": 1161, "h": 1600, "hero": true },
+    { "id": "inner-circle", "title": { "he": "מעגל פנימי", "en": "Inner Circle" }, "medium": { "he": "דיו על לוח קרטון", "en": "Ink on board" }, "size": "45×41", "src": "photos/inner-circle.jpg", "thumb": "photos/inner-circle-s.jpg", "w": 1920, "h": 1755, "hero": false },
+    { "id": "flowchart", "title": { "he": "תרשים זרימה", "en": "Flowchart" }, "medium": { "he": "דיו על לוח קרטון", "en": "Ink on board" }, "size": "60×45", "src": "photos/flowchart.jpg", "thumb": "photos/flowchart-s.jpg", "w": 1920, "h": 1440, "hero": false },
+    { "id": "living-rust", "title": { "he": "חלודה חיה", "en": "Living Rust" }, "medium": { "he": "דיו על לוח קרטון", "en": "Ink on board" }, "size": "38×50", "src": "photos/living-rust.jpg", "thumb": "photos/living-rust-s.jpg", "w": 1482, "h": 1975, "hero": true },
+    { "id": "waves-of-gold", "title": { "he": "גלי זהב", "en": "Waves of Gold" }, "medium": { "he": "דיו על נייר", "en": "Ink on paper" }, "size": "45×60", "src": "photos/waves-of-gold.jpg", "thumb": "photos/waves-of-gold-s.jpg", "w": 1501, "h": 2000, "hero": true }
+  ],
+  "texts": []
+}
