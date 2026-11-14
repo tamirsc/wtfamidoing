@@ -84,7 +84,8 @@
       "w": 1080,
       "h": 1440,
       "hero": false,
-      "project": "pmwgtpfnj"
+      "project": "pmwgtpfnj",
+      "display": "medium"
     },
     {
       "id": "wmwgpvsem1",
@@ -103,7 +104,8 @@
       "h": 2400,
       "hero": false,
       "project": "pmwgp92xn",
-      "year": "2026"
+      "year": "2026",
+      "display": "small"
     },
     {
       "id": "wmwgov1wu1",
@@ -121,7 +123,8 @@
       "w": 2400,
       "h": 2400,
       "hero": true,
-      "year": "2025"
+      "year": "2025",
+      "display": "large"
     },
     {
       "id": "wmwgnrove1",
@@ -139,7 +142,8 @@
       "w": 2400,
       "h": 2400,
       "hero": false,
-      "year": "2026"
+      "year": "2026",
+      "display": "medium"
     },
     {
       "id": "wmwgq0mum1",
@@ -157,7 +161,8 @@
       "w": 1792,
       "h": 2400,
       "hero": false,
-      "year": "2026"
+      "year": "2026",
+      "display": "medium"
     },
     {
       "id": "beyond-the-fence",
@@ -175,7 +180,8 @@
       "w": 1920,
       "h": 1440,
       "hero": false,
-      "year": "2025"
+      "year": "2025",
+      "display": "large"
     },
     {
       "id": "wmwgv3auq1",
@@ -246,7 +252,8 @@
       "h": 1600,
       "hero": false,
       "project": "pmwgp92xn",
-      "year": "2026"
+      "year": "2026",
+      "display": "medium"
     },
     {
       "id": "inner-circle",
