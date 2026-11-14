@@ -203,7 +203,8 @@
       "h": 1414,
       "hero": false,
       "project": "pmwgtpfnj",
-      "year": "2026"
+      "year": "2026",
+      "display": "medium"
     },
     {
       "id": "forest-script",
