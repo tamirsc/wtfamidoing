@@ -23,8 +23,8 @@
   function workHtml(w, i, big) {
     const img = `<img src="${esc(w.thumb || w.src)}" alt="${esc(t(w.title))}" width="${w.w || ''}" height="${w.h || ''}" loading="lazy">`;
     if (big) {
-      return `<button type="button" class="frame" data-open="${i}" aria-label="${esc(t(w.title))}: ${UI[lang].open}">${img}<span class="num" aria-hidden="true">${pad(i + 1)}</span></button>
-        <div class="cap"><h3>${esc(t(w.title))}</h3><p class="alt" lang="${lang === 'he' ? 'en' : 'he'}">${esc(other(w.title))}</p><p class="meta">${meta(w)}</p>
+      return `<button type="button" class="frame" data-open="${i}" aria-label="${esc(t(w.title))}: ${UI[lang].open}">${img}</button>
+        <div class="cap"><span class="n" aria-hidden="true">${pad(i + 1)}</span><h3>${esc(t(w.title))}</h3><p class="alt" lang="${lang === 'he' ? 'en' : 'he'}">${esc(other(w.title))}</p><p class="meta">${meta(w)}</p>
         <button type="button" class="open" data-open="${i}">${UI[lang].open} ${lang === 'he' ? '←' : '→'}</button></div>`;
     }
     return `<div class="work"><button type="button" class="frame" data-open="${i}" aria-label="${esc(t(w.title))}: ${UI[lang].open}">${img}</button>
@@ -75,7 +75,6 @@
     $('about-body').innerHTML = ((data.about && (data.about[lang] || data.about.he)) || []).map((p) => `<p>${esc(p)}</p>`).join('');
 
     const c = data.contact || {};
-    $('talk').href = c.email ? `mailto:${c.email}` : '#contact';
     $('foot-links').innerHTML = [
       c.email && `<a href="mailto:${esc(c.email)}" dir="ltr">${esc(c.email)}</a>`,
       c.instagram && `<a href="${esc(c.instagram)}" target="_blank" rel="noopener">Instagram</a>`,
