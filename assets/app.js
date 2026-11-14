@@ -190,6 +190,10 @@
 
   $('nav-proj-btn').onclick = () => { const open = $('nav-sub').hidden; $('nav-sub').hidden = !open; $('nav-proj-btn').setAttribute('aria-expanded', String(open)); };
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSub(); });
+  /* the name in the menu shows only once the large name has scrolled out of view */
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([en]) => document.querySelector('.nav').classList.toggle('at-top', en.isIntersecting), { rootMargin: '-110px 0px 0px 0px' }).observe($('hero-name'));
+  } else document.querySelector('.nav').classList.remove('at-top');
   $('lang').onclick = () => { lang = lang === 'he' ? 'en' : 'he'; store.set('lang', lang); render(); };
 
   /* torn strips drift sideways as the page scrolls */

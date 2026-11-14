@@ -21,7 +21,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* nav */
 .nav { position: sticky; top: 0; z-index: 20; background: var(--paper); border-bottom: 1px solid #d6d4cc; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px 24px; padding: 12px var(--pad); font-size: 15px; font-weight: 500; }
-.nav-name { letter-spacing: .04em; }
+.nav-name { letter-spacing: .04em; transition: opacity .25s ease, visibility .25s; }
+.nav.at-top .nav-name { opacity: 0; visibility: hidden; }
 .nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 26px; margin-inline-start: auto; }
 .nav-btn { background: none; border: 0; padding: 10px 0; font-weight: 500; }
 .nav-btn::after { content: '▾'; display: inline-block; margin-inline-start: 5px; font-size: 11px; transition: transform .2s; }
