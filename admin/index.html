@@ -44,6 +44,11 @@ summary { cursor: pointer; font-weight: 600; min-height: 32px; }
 .connect summary { margin-bottom: 0; }
 .connect[open] summary { margin-bottom: 12px; }
 #c-state { font-weight: 400; font-size: 14px; opacity: .75; }
+.connect h2, section h2 { margin: 0 0 12px; font-size: 18px; }
+.drop { display: block; border: 2px dashed var(--ink); padding: 28px; text-align: center; font-weight: 600; font-size: 16px; color: var(--ink); cursor: pointer; margin-bottom: 20px; }
+.drop:hover, .drop.over { background: #e4e2da; }
+.drop input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.new { color: var(--accent); font-size: 13px; font-weight: 600; }
 .grid[hidden] { display: none; }
 button.armed { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
 .card.proj:not(.open) .card-head { margin-bottom: 0; }
