@@ -29,7 +29,7 @@
         <div class="cap"><span class="n" aria-hidden="true">${pad(n)}</span><h3>${esc(t(w.title))}</h3><p class="alt" lang="${lang === 'he' ? 'en' : 'he'}">${esc(other(w.title))}</p><p class="meta">${meta(w)}</p>
         <button type="button" class="open" data-open="${i}">${UI[lang].open} ${lang === 'he' ? '←' : '→'}</button></div>`;
     }
-    return `<div class="work"><button type="button" class="frame" data-open="${i}" aria-label="${esc(t(w.title))}: ${UI[lang].open}">${img}</button>
+    return `<div class="work${w.display ? ' sz-' + esc(w.display) : ''}"><button type="button" class="frame" data-open="${i}" aria-label="${esc(t(w.title))}: ${UI[lang].open}">${img}</button>
       <div class="cap-row"><h3>${esc(t(w.title))}</h3><span class="n" aria-hidden="true">${pad(n)}</span></div><p class="sub">${meta(w)}</p></div>`;
   }
 
@@ -101,9 +101,13 @@
     $('count').textContent = pad(visible.length);
     let html = '', k = 0, step = 0;
     while (k < visible.length) {
-      const flip = step % 4 >= 2 ? ' flip' : '', i = visible[k];
-      if (step % 2 === 0 || k === visible.length - 1) {
-        html += `<div class="plate plate-one${flip}">${workHtml(works[i], i, true, k + 1)}</div>`; k += 1;
+      // each work may set display: 'large' (alone, full width), 'medium' (alone, or beside a small one), 'small' (always beside another); empty = automatic alternation
+      const flip = step % 4 >= 2 ? ' flip' : '', i = visible[k], d = works[i].display || '';
+      const next = visible[k + 1], dn = next === undefined ? null : (works[next].display || '');
+      const canPair = next !== undefined && dn !== 'large';
+      const pair = d === 'large' ? false : d === 'small' ? canPair : d === 'medium' ? dn === 'small' : (step % 2 === 1 && canPair);
+      if (!pair) {
+        html += `<div class="plate plate-one${flip}${d ? ' sz-' + esc(d) : ''}">${workHtml(works[i], i, true, k + 1)}</div>`; k += 1;
       } else {
         html += `<div class="plate plate-two${flip}">${workHtml(works[i], i, false, k + 1)}${workHtml(works[visible[k + 1]], visible[k + 1], false, k + 2)}</div>`; k += 2;
       }

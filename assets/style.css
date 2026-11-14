@@ -87,6 +87,11 @@ html[lang="en"] .hero-name { text-transform: uppercase; }
 .plate-two .work:first-child { flex: 1 1 280px; padding-top: clamp(0px, 9vw, 130px); }
 .plate-two .work:last-child { flex: 1.5 1 400px; }
 .work { min-width: 0; }
+.plate-two:has(.sz-small, .sz-medium) { justify-content: space-between; }
+.plate-two .work.sz-small { flex: 0 1 32%; }
+.plate-two .work.sz-medium { flex: 0 1 56%; }
+.plate-one.sz-medium .frame { flex: 0 1 56%; }
+.plate-one.sz-small .frame { flex: 0 1 32%; }
 .frame { position: relative; display: block; width: 100%; padding: 0; border: 0; background: #dedcd5; min-width: 0; cursor: zoom-in; }
 .frame img { width: 100%; height: auto; transition: opacity .5s ease; }
 .frame:hover img { opacity: .9; }
@@ -154,6 +159,7 @@ dialog::backdrop { background: #0c0c0c; }
 .reader figcaption { margin-top: 10px; font-size: 13px; color: var(--mute); }
 
 @media (max-width: 640px) {
+  .plate-two .work, .plate-one .frame { flex-basis: 100% !important; }
   html { scroll-padding-top: 110px; }
   .nav { padding: 8px var(--pad) 4px; }
   .nav-links { flex-wrap: nowrap; width: 100%; overflow-x: auto; white-space: nowrap; gap: 20px; scrollbar-width: none; font-size: 14px; }
