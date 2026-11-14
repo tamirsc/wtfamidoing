@@ -110,7 +110,7 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
     try {
       const f = await gh(FILE);
       if (dirty && !confirm('יש שינויים שלא נשמרו. לטעון מחדש מהריפו ולאבד אותם?')) return;
-      data = JSON.parse(b64decode(f.content)); sha = f.sha; connected = true; dirty = false;
+      data = JSON.parse(b64decode(f.content)); data.projects ??= []; data.texts ??= []; sha = f.sha; connected = true; dirty = false;
       pending.clear(); removed.clear();
       localStorage.setItem(LS, JSON.stringify(cfg));
       status('מחובר'); $('save').disabled = true; draw();
@@ -186,10 +186,14 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
     if (tab === 'works') {
       $('panel').innerHTML = `<label class="drop" id="drop"><input type="file" id="files" accept="image/*" multiple>הוספת תמונות: לחיצה או גרירה לכאן</label>
         <p class="hint">התמונות מוקטנות אוטומטית (עד 2400 פיקסלים) לפני ההעלאה. ״ברצועות הפתיחה״ קובע אילו 4 עבודות יופיעו בראש דף הבית.</p>` +
+        `<div class="card"><h2>פרויקטים</h2><p class="hint">פרויקט הוא קבוצת עבודות עם שם ותיאור. באתר מופיעים כפתורי סינון מעל העבודות. עבודה בלי פרויקט מופיעה רק תחת ״הכול״.</p>` +
+        data.projects.map((p, i) => `<div class="card"><div class="card-head"><strong>${esc(p.title.he || p.title.en || 'פרויקט ללא שם')}</strong><div class="card-tools"><button class="small" data-act="p-up" data-i="${i}" aria-label="הזזה למעלה">↑</button><button class="small" data-act="p-down" data-i="${i}" aria-label="הזזה למטה">↓</button><button class="small danger" data-act="del-proj" data-i="${i}">מחיקה</button></div></div>
+          <div class="grid">${field('שם (עברית)', `projects.${i}.title.he`)}${field('Name (English)', `projects.${i}.title.en`, { ltr: 1 })}${field('תיאור (עברית)', `projects.${i}.description.he`, { area: 1 })}${field('Description (English)', `projects.${i}.description.en`, { area: 1, ltr: 1 })}</div></div>`).join('') +
+        `<button data-act="add-proj">פרויקט חדש</button></div>` +
         data.works.map((w, i) => `<div class="card"><div class="card-head"><img src="${esc(imgUrl(w.thumb || w.src))}" alt="">
           <div>${pending.has(w.src) ? '<span class="new">חדש · טרם פורסם</span>' : ''}<label class="check"><input type="checkbox" data-path="works.${i}.hero"${w.hero ? ' checked' : ''}> ברצועות הפתיחה</label></div>
           <div class="card-tools"><button class="small" data-act="up" data-i="${i}" aria-label="הזזה למעלה">↑</button><button class="small" data-act="down" data-i="${i}" aria-label="הזזה למטה">↓</button><button class="small danger" data-act="del-work" data-i="${i}">מחיקה</button></div></div>
-          <div class="grid">${field('שם (עברית)', `works.${i}.title.he`)}${field('Title (English)', `works.${i}.title.en`, { ltr: 1 })}${field('טכניקה (עברית)', `works.${i}.medium.he`)}${field('Medium (English)', `works.${i}.medium.en`, { ltr: 1 })}${field('מידות בס״מ, למשל 67×50', `works.${i}.size`, { ltr: 1 })}${field('שנה', `works.${i}.year`, { ltr: 1 })}</div></div>`).join('');
+          <div class="grid">${field('שם (עברית)', `works.${i}.title.he`)}${field('Title (English)', `works.${i}.title.en`, { ltr: 1 })}${field('טכניקה (עברית)', `works.${i}.medium.he`)}${field('Medium (English)', `works.${i}.medium.en`, { ltr: 1 })}${field('מידות בס״מ, למשל 67×50', `works.${i}.size`, { ltr: 1 })}${field('שנה', `works.${i}.year`, { ltr: 1 })}<div><label for="f-proj-${i}">פרויקט</label><select id="f-proj-${i}" data-path="works.${i}.project"><option value="">ללא פרויקט</option>${data.projects.map((p) => `<option value="${esc(p.id)}"${p.id === w.project ? ' selected' : ''}>${esc(p.title.he || p.title.en || p.id)}</option>`).join('')}</select></div></div></div>`).join('');
       $('files').onchange = (e) => addPhotos(e.target.files);
       const d = $('drop');
       d.ondragover = (e) => { e.preventDefault(); d.classList.add('over'); };
@@ -207,7 +211,7 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
     } else {
       $('panel').innerHTML = `<div class="card"><h2>פתיחה</h2><div class="grid">${field('משפט פתיחה (עברית)', 'tagline.he')}${field('Tagline (English)', 'tagline.en', { ltr: 1 })}${field('ציטוט מודגש (עברית)', 'quote.he')}${field('Pull quote (English)', 'quote.en', { ltr: 1 })}</div></div>
         <div class="card"><h2>אודות</h2><div class="grid">${field('אודות (עברית)', 'about.he', { area: 1, paras: 1 })}${field('About (English)', 'about.en', { area: 1, paras: 1, ltr: 1 })}</div></div>
-        <div class="card"><h2>קשר</h2><div class="grid">${field('אימייל', 'contact.email', { ltr: 1 })}${field('אינסטגרם (קישור)', 'contact.instagram', { ltr: 1 })}${field('קישור לרכישה', 'contact.shop', { ltr: 1 })}</div></div>`;
+        <div class="card"><h2>קשר</h2><div class="grid">${field('אימייל', 'contact.email', { ltr: 1 })}${field('אינסטגרם (קישור)', 'contact.instagram', { ltr: 1 })}${field('קישור לרכישה', 'contact.shop', { ltr: 1 })}${field('קישור ל־1x', 'contact.onex', { ltr: 1 })}</div></div>`;
     }
   }
 
@@ -224,6 +228,15 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
     else if (act === 'down') move(data.works, 1);
     else if (act === 't-up') move(data.texts, -1);
     else if (act === 't-down') move(data.texts, 1);
+    else if (act === 'p-up') move(data.projects, -1);
+    else if (act === 'p-down') move(data.projects, 1);
+    else if (act === 'add-proj') data.projects.push({ id: 'p' + Date.now().toString(36), title: { he: '', en: '' }, description: { he: '', en: '' } });
+    else if (act === 'del-proj') {
+      const p = data.projects[i];
+      if (!confirm(`למחוק את הפרויקט "${p.title.he || p.title.en || ''}"? העבודות עצמן לא יימחקו.`)) return;
+      data.works.forEach((w) => { if (w.project === p.id) w.project = ''; });
+      data.projects.splice(i, 1);
+    }
     else if (act === 'del-work') {
       const w = data.works[i];
       if (!confirm(`למחוק את "${w.title.he || w.title.en || 'העבודה'}"?`)) return;
@@ -250,7 +263,7 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
   $('c-branch').value = cfg.branch || 'main';
   $('c-token').value = cfg.token || '';
   if (cfg.token) connect();
-  else fetch('../' + FILE, { cache: 'no-cache' }).then((r) => r.json()).then((d) => { data = d; data.texts ??= []; draw(); status('מצב תצוגה. התחבר כדי לשמור'); }).catch(() => status('לא הצלחתי לטעון את התוכן', true));
+  else fetch('../' + FILE, { cache: 'no-cache' }).then((r) => r.json()).then((d) => { data = d; data.texts ??= []; data.projects ??= []; draw(); status('מצב תצוגה. התחבר כדי לשמור'); }).catch(() => status('לא הצלחתי לטעון את התוכן', true));
 })();
 </script>
 </body>

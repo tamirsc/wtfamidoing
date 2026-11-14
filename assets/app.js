@@ -2,8 +2,8 @@
   'use strict';
 
   const UI = {
-    he: { skip: 'דלג לעבודות', works: 'עבודות', writing: 'טקסטים', about: 'אודות', contact: 'קשר', motto: 'צילום · קריעה · הרכבה מחדש', talk: 'דברו איתי', open: 'לצפייה במסך מלא', read: 'לקריאה', photo: 'צילום', cm: 'ס״מ', shop: 'רכישת עבודות', noTexts: 'טקסטים יתווספו כאן בקרוב.', langBtn: 'EN', langLabel: 'Switch to English', close: 'סגירה', prev: 'הקודם', next: 'הבא' },
-    en: { skip: 'Skip to works', works: 'Works', writing: 'Writing', about: 'About', contact: 'Contact', motto: 'Photograph · Tear · Reassemble', talk: 'Get in touch', open: 'View full screen', read: 'Read', photo: 'Photography', cm: 'cm', shop: 'Buy prints', noTexts: 'Texts will appear here soon.', langBtn: 'עב', langLabel: 'מעבר לעברית', close: 'Close', prev: 'Previous', next: 'Next' }
+    he: { skip: 'דלג לעבודות', works: 'עבודות', writing: 'טקסטים', about: 'אודות', contact: 'קשר', motto: 'צילום · קריעה · הרכבה מחדש', talk: 'דברו איתי', all: 'הכול', open: 'לצפייה במסך מלא', read: 'לקריאה', photo: 'צילום', cm: 'ס״מ', shop: 'רכישת עבודות', shopNote: 'העבודות זמינות לרכישה דרך גלריה ״פחות מאלף״, תל אביב.', shopLink: 'לעמוד שלי בגלריה', noTexts: 'טקסטים יתווספו כאן בקרוב.', langBtn: 'EN', langLabel: 'Switch to English', close: 'סגירה', prev: 'הקודם', next: 'הבא' },
+    en: { skip: 'Skip to works', works: 'Works', writing: 'Writing', about: 'About', contact: 'Contact', motto: 'Photograph · Tear · Reassemble', talk: 'Get in touch', all: 'All', open: 'View full screen', read: 'Read', photo: 'Photography', cm: 'cm', shop: 'Buy works', shopNote: 'Works are available through the Under 1000 gallery, Tel Aviv.', shopLink: 'My page at the gallery', noTexts: 'Texts will appear here soon.', langBtn: 'עב', langLabel: 'מעבר לעברית', close: 'Close', prev: 'Previous', next: 'Next' }
   };
 
   const $ = (id) => document.getElementById(id);
@@ -14,21 +14,23 @@
   let lang = ['he', 'en'].includes(param) ? param : (store.get('lang') || 'he');
   let data = null;
   let current = -1;
+  let proj = '';        // selected project id, '' = all
+  let visible = [];     // indices into data.works currently shown
 
   const t = (o) => (o && (o[lang] || o.he || o.en)) || '';
   const other = (o) => (o && o[lang === 'he' ? 'en' : 'he']) || '';
   const pad = (n) => String(n).padStart(2, '0');
   const meta = (w) => [t(w.medium), w.size ? `<bdi dir="ltr">${esc(w.size)}</bdi> ${UI[lang].cm}` : '', w.year].filter(Boolean).join(' · ');
 
-  function workHtml(w, i, big) {
+  function workHtml(w, i, big, n) {
     const img = `<img src="${esc(w.thumb || w.src)}" alt="${esc(t(w.title))}" width="${w.w || ''}" height="${w.h || ''}" loading="lazy">`;
     if (big) {
       return `<button type="button" class="frame" data-open="${i}" aria-label="${esc(t(w.title))}: ${UI[lang].open}">${img}</button>
-        <div class="cap"><span class="n" aria-hidden="true">${pad(i + 1)}</span><h3>${esc(t(w.title))}</h3><p class="alt" lang="${lang === 'he' ? 'en' : 'he'}">${esc(other(w.title))}</p><p class="meta">${meta(w)}</p>
+        <div class="cap"><span class="n" aria-hidden="true">${pad(n)}</span><h3>${esc(t(w.title))}</h3><p class="alt" lang="${lang === 'he' ? 'en' : 'he'}">${esc(other(w.title))}</p><p class="meta">${meta(w)}</p>
         <button type="button" class="open" data-open="${i}">${UI[lang].open} ${lang === 'he' ? '←' : '→'}</button></div>`;
     }
     return `<div class="work"><button type="button" class="frame" data-open="${i}" aria-label="${esc(t(w.title))}: ${UI[lang].open}">${img}</button>
-      <div class="cap-row"><h3>${esc(t(w.title))}</h3><span class="n" aria-hidden="true">${pad(i + 1)}</span></div><p class="sub">${meta(w)}</p></div>`;
+      <div class="cap-row"><h3>${esc(t(w.title))}</h3><span class="n" aria-hidden="true">${pad(n)}</span></div><p class="sub">${meta(w)}</p></div>`;
   }
 
   function render() {
@@ -51,18 +53,7 @@
     $('strips').innerHTML = strips.map(({ w, i }) =>
       `<button type="button" class="strip" data-open="${i}" aria-label="${esc(t(w.title))}"><span><img src="${esc(w.thumb || w.src)}" alt=""></span></button>`).join('');
 
-    $('count').textContent = pad(works.length);
-    let html = '', i = 0, step = 0;
-    while (i < works.length) {
-      const flip = step % 4 >= 2 ? ' flip' : '';
-      if (step % 2 === 0 || i === works.length - 1) {
-        html += `<div class="plate plate-one${flip}">${workHtml(works[i], i, true)}</div>`; i += 1;
-      } else {
-        html += `<div class="plate plate-two${flip}">${workHtml(works[i], i)}${workHtml(works[i + 1], i + 1)}</div>`; i += 2;
-      }
-      step += 1;
-    }
-    $('plates').innerHTML = html;
+    renderWorks();
 
     const texts = data.texts || [];
     $('text-list').innerHTML = texts.length
@@ -75,10 +66,15 @@
     $('about-body').innerHTML = ((data.about && (data.about[lang] || data.about.he)) || []).map((p) => `<p>${esc(p)}</p>`).join('');
 
     const c = data.contact || {};
+    const arrow = lang === 'he' ? '←' : '→';
+    $('nav-ext').innerHTML = [
+      c.shop && `<a href="${esc(c.shop)}" target="_blank" rel="noopener">${u.shop}</a>`,
+      c.instagram && `<a href="${esc(c.instagram)}" target="_blank" rel="noopener" dir="ltr">Instagram</a>`,
+      c.onex && `<a href="${esc(c.onex)}" target="_blank" rel="noopener" dir="ltr">1x</a>`
+    ].filter(Boolean).join('');
+    $('shop-note').innerHTML = c.shop ? `${u.shopNote} <a href="${esc(c.shop)}" target="_blank" rel="noopener">${u.shopLink} ${arrow}</a>` : '';
     $('foot-links').innerHTML = [
       c.email && `<a href="mailto:${esc(c.email)}" dir="ltr">${esc(c.email)}</a>`,
-      c.instagram && `<a href="${esc(c.instagram)}" target="_blank" rel="noopener">Instagram</a>`,
-      c.shop && `<a href="${esc(c.shop)}" target="_blank" rel="noopener">${u.shop}</a>`,
       `<small dir="ltr">© ${new Date().getFullYear()} ${esc(data.artist.en || '')}</small>`
     ].filter(Boolean).join('');
 
@@ -91,7 +87,31 @@
     route();
   }
 
+  function renderWorks() {
+    const works = data.works || [], projects = data.projects || [];
+    if (proj && !projects.some((p) => p.id === proj)) proj = '';
+    visible = works.map((w, i) => i).filter((i) => !proj || works[i].project === proj);
+    $('filters').innerHTML = projects.length
+      ? [{ id: '', title: { he: UI.he.all, en: UI.en.all } }, ...projects].map((p) => `<button type="button" data-proj="${esc(p.id)}" aria-pressed="${p.id === proj}">${esc(t(p.title))}</button>`).join('')
+      : '';
+    const cur = projects.find((p) => p.id === proj);
+    $('proj-desc').textContent = cur ? t(cur.description) : '';
+    $('count').textContent = pad(visible.length);
+    let html = '', k = 0, step = 0;
+    while (k < visible.length) {
+      const flip = step % 4 >= 2 ? ' flip' : '', i = visible[k];
+      if (step % 2 === 0 || k === visible.length - 1) {
+        html += `<div class="plate plate-one${flip}">${workHtml(works[i], i, true, k + 1)}</div>`; k += 1;
+      } else {
+        html += `<div class="plate plate-two${flip}">${workHtml(works[i], i, false, k + 1)}${workHtml(works[visible[k + 1]], visible[k + 1], false, k + 2)}</div>`; k += 2;
+      }
+      step += 1;
+    }
+    $('plates').innerHTML = html;
+  }
+
   /* viewer */
+  const step = (d) => { const list = visible.includes(current) ? visible : data.works.map((w, i) => i); const k = list.indexOf(current); show(list[(k + d + list.length) % list.length]); };
   function show(i) {
     const works = data.works;
     current = (i + works.length) % works.length;
@@ -102,7 +122,7 @@
     full.onload = () => { if (data.works[current] === w) img.src = w.src; };
     full.src = w.src;
     img.alt = t(w.title);
-    $('v-num').textContent = pad(current + 1);
+    $('v-num').textContent = pad((visible.includes(current) ? visible.indexOf(current) : current) + 1);
     $('v-title').textContent = t(w.title);
     $('v-meta').innerHTML = meta(w);
     if (!$('viewer').open) $('viewer').showModal();
@@ -120,20 +140,23 @@
     $('reader').scrollTop = 0;
   }
   function route() {
-    const m = location.hash.match(/^#\/(work|text)\/(.+)$/);
+    const m = location.hash.match(/^#\/(work|text|project)\/(.+)$/);
     if (!m || !data) return;
     const id = decodeURIComponent(m[2]);
-    if (m[1] === 'work') { const i = data.works.findIndex((w) => w.id === id); if (i >= 0) show(i); }
+    if (m[1] === 'project') { if (proj !== id) { proj = id; renderWorks(); $('works').scrollIntoView(); } }
+    else if (m[1] === 'work') { const i = data.works.findIndex((w) => w.id === id); if (i >= 0) show(i); }
     else showText(id);
   }
-  const clearHash = (anchor) => { if (location.hash.startsWith('#/')) history.replaceState(null, '', anchor); };
+  const clearHash = (anchor) => { if (location.hash.startsWith('#/')) history.replaceState(null, '', anchor === '#works' && proj ? `#/project/${encodeURIComponent(proj)}` : anchor); };
 
   document.addEventListener('click', (e) => {
     const el = e.target.closest('[data-open]');
-    if (el) show(Number(el.dataset.open));
+    if (el) { show(Number(el.dataset.open)); return; }
+    const f = e.target.closest('[data-proj]');
+    if (f) { proj = f.dataset.proj; renderWorks(); history.replaceState(null, '', proj ? `#/project/${encodeURIComponent(proj)}` : '#works'); }
   });
-  $('v-prev').onclick = () => show(current - 1);
-  $('v-next').onclick = () => show(current + 1);
+  $('v-prev').onclick = () => step(-1);
+  $('v-next').onclick = () => step(1);
   $('v-close').onclick = () => $('viewer').close();
   $('r-close').onclick = () => $('reader').close();
   $('viewer').addEventListener('close', () => clearHash('#works'));
@@ -141,8 +164,8 @@
   $('viewer').addEventListener('click', (e) => { if (e.target === $('viewer')) $('viewer').close(); });
   $('viewer').addEventListener('keydown', (e) => {
     const fwd = lang === 'he' ? 'ArrowLeft' : 'ArrowRight', back = lang === 'he' ? 'ArrowRight' : 'ArrowLeft';
-    if (e.key === fwd) show(current + 1);
-    if (e.key === back) show(current - 1);
+    if (e.key === fwd) step(1);
+    if (e.key === back) step(-1);
   });
   let touchX = null;
   $('viewer').addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
@@ -151,7 +174,7 @@
     const dx = e.changedTouches[0].clientX - touchX; touchX = null;
     if (Math.abs(dx) < 50) return;
     const fwd = lang === 'he' ? dx > 0 : dx < 0;
-    show(current + (fwd ? 1 : -1));
+    step(fwd ? 1 : -1);
   });
   window.addEventListener('hashchange', route);
 
