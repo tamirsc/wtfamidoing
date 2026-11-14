@@ -280,24 +280,6 @@
       "year": "2024"
     },
     {
-      "id": "flowchart",
-      "title": {
-        "he": "תרשים זרימה",
-        "en": "Flowchart"
-      },
-      "medium": {
-        "he": "",
-        "en": ""
-      },
-      "size": "60×45",
-      "src": "photos/flowchart.jpg",
-      "thumb": "photos/flowchart-s.jpg",
-      "w": 1920,
-      "h": 1440,
-      "hero": false,
-      "year": "2026"
-    },
-    {
       "id": "living-rust",
       "title": {
         "he": "חלודה חיה",
@@ -332,6 +314,25 @@
       "h": 2000,
       "hero": false,
       "year": "2025"
+    },
+    {
+      "id": "flowchart",
+      "title": {
+        "he": "תרשים זרימה",
+        "en": "Flowchart"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "60×45",
+      "src": "photos/flowchart.jpg",
+      "thumb": "photos/flowchart-s.jpg",
+      "w": 1920,
+      "h": 1440,
+      "hero": false,
+      "year": "2026",
+      "display": "large"
     }
   ],
   "texts": [],
