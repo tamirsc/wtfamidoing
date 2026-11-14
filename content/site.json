@@ -32,6 +32,25 @@
   },
   "works": [
     {
+      "id": "wmwgzyzdx1",
+      "title": {
+        "he": "עמדה משותפת",
+        "en": "A Shared Stance"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "45×60",
+      "src": "photos/wmwgzyzdx1.jpg",
+      "thumb": "photos/wmwgzyzdx1-s.jpg",
+      "w": 1478,
+      "h": 1971,
+      "hero": false,
+      "project": "pmwgz0lhv",
+      "year": "2021"
+    },
+    {
       "id": "bands-of-landscape",
       "title": {
         "he": "רצועות נוף",
