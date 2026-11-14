@@ -50,6 +50,43 @@
       "year": "2026"
     },
     {
+      "id": "wmwgu33791",
+      "title": {
+        "he": "בין העץ לאדמה",
+        "en": "Between Tree and Earth"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "50x40",
+      "src": "photos/wmwgu33791.jpg",
+      "thumb": "photos/wmwgu33791-s.jpg",
+      "w": 2400,
+      "h": 1908,
+      "hero": false,
+      "project": "pmwgtpfnj",
+      "year": "2026"
+    },
+    {
+      "id": "wmwguzol51",
+      "title": {
+        "he": "אפור זולג",
+        "en": "Seeping Grey"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "45x60",
+      "src": "photos/wmwguzol51.jpg",
+      "thumb": "photos/wmwguzol51-s.jpg",
+      "w": 1080,
+      "h": 1440,
+      "hero": false,
+      "project": "pmwgtpfnj"
+    },
+    {
       "id": "wmwgpvsem1",
       "title": {
         "he": "שדה כבידה ",
@@ -158,6 +195,24 @@
       "h": 1440,
       "hero": false,
       "year": "2025"
+    },
+    {
+      "id": "wmwgv3auq1",
+      "title": {
+        "he": "חסימה בתזוזה",
+        "en": "Shifting Barrier"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "60x42",
+      "src": "photos/wmwgv3auq1.jpg",
+      "thumb": "photos/wmwgv3auq1-s.jpg",
+      "w": 2000,
+      "h": 1414,
+      "hero": false,
+      "project": "pmwgtpfnj"
     },
     {
       "id": "forest-script",
@@ -304,17 +359,6 @@
       "description": {
         "he": "פרטים שנמצאו בשיטוט מצולמים, מודפסים ומסודרים מחדש. באמצעות חיתוך, חזרה והזזה, עלים ומשטחים סדוקים יוצאים מהקשרם המקורי. קווים ממשיכים בין תצלומים או נקטעים בגבולותיהם, והרווחים בין החלקים משתתפים ביצירת סדר אחר.",
         "en": "Details encountered while wandering are photographed, printed and rearranged. Through cutting, repetition and displacement, leaves and cracked surfaces are drawn out of their original surroundings. Lines continue from one photograph to another or break at their edges, while the gaps between fragments help shape another order."
-      }
-    },
-    {
-      "id": "pmwgtqjkd",
-      "title": {
-        "he": "",
-        "en": ""
-      },
-      "description": {
-        "he": "",
-        "en": ""
       }
     }
   ]
