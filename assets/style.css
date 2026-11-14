@@ -23,6 +23,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .nav { position: sticky; top: 0; z-index: 20; background: var(--paper); border-bottom: 1px solid #d6d4cc; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px 24px; padding: 12px var(--pad); font-size: 15px; font-weight: 500; }
 .nav-name { letter-spacing: .04em; }
 .nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 26px; margin-inline-start: auto; }
+.nav-btn { background: none; border: 0; padding: 10px 0; font-weight: 500; }
+.nav-btn::after { content: '▾'; display: inline-block; margin-inline-start: 5px; font-size: 11px; transition: transform .2s; }
+.nav-btn[aria-expanded="true"]::after { transform: rotate(180deg); }
+.nav-btn:hover { color: var(--accent); }
+.nav-btn[hidden], .nav-sub[hidden] { display: none; }
+.nav-sub { order: 9; flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 0 28px; padding: 6px 0 4px; border-top: 1px solid #d6d4cc; font-family: var(--display); font-size: 30px; line-height: 1; }
+.nav-sub a { padding: 9px 0; }
+.nav-sub a[aria-current] { color: var(--accent); }
 .nav-ext { display: contents; }
 .nav-ext a:first-child { border-inline-start: 1.5px solid var(--ink); padding-inline-start: 26px; }
 .nav-links a { padding: 10px 0; }

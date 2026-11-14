@@ -2,8 +2,8 @@
   'use strict';
 
   const UI = {
-    he: { skip: 'דלג לעבודות', works: 'עבודות', writing: 'טקסטים', about: 'אודות', contact: 'קשר', motto: 'צילום · קריעה · הרכבה מחדש', talk: 'דברו איתי', all: 'הכול', open: 'לצפייה במסך מלא', read: 'לקריאה', photo: 'צילום', cm: 'ס״מ', shop: 'רכישת עבודות', shopNote: 'העבודות זמינות לרכישה דרך גלריה ״פחות מאלף״, תל אביב.', shopLink: 'לעמוד שלי בגלריה', noTexts: 'טקסטים יתווספו כאן בקרוב.', langBtn: 'EN', langLabel: 'Switch to English', close: 'סגירה', prev: 'הקודם', next: 'הבא' },
-    en: { skip: 'Skip to works', works: 'Works', writing: 'Writing', about: 'About', contact: 'Contact', motto: 'Photograph · Tear · Reassemble', talk: 'Get in touch', all: 'All', open: 'View full screen', read: 'Read', photo: 'Photography', cm: 'cm', shop: 'Buy works', shopNote: 'Works are available through the Under 1000 gallery, Tel Aviv.', shopLink: 'My page at the gallery', noTexts: 'Texts will appear here soon.', langBtn: 'עב', langLabel: 'מעבר לעברית', close: 'Close', prev: 'Previous', next: 'Next' }
+    he: { skip: 'דלג לעבודות', works: 'עבודות', projects: 'פרויקטים', writing: 'טקסטים', about: 'אודות', contact: 'קשר', motto: 'צילום · קריעה · הרכבה מחדש', talk: 'דברו איתי', all: 'הכול', open: 'לצפייה במסך מלא', read: 'לקריאה', photo: 'צילום', cm: 'ס״מ', shop: 'רכישת עבודות', shopNote: 'העבודות זמינות לרכישה דרך גלריה ״פחות מאלף״, תל אביב.', shopLink: 'לעמוד שלי בגלריה', noTexts: 'טקסטים יתווספו כאן בקרוב.', langBtn: 'EN', langLabel: 'Switch to English', close: 'סגירה', prev: 'הקודם', next: 'הבא' },
+    en: { skip: 'Skip to works', works: 'Works', projects: 'Projects', writing: 'Writing', about: 'About', contact: 'Contact', motto: 'Photograph · Tear · Reassemble', talk: 'Get in touch', all: 'All', open: 'View full screen', read: 'Read', photo: 'Photography', cm: 'cm', shop: 'Buy works', shopNote: 'Works are available through the Under 1000 gallery, Tel Aviv.', shopLink: 'My page at the gallery', noTexts: 'Texts will appear here soon.', langBtn: 'עב', langLabel: 'מעבר לעברית', close: 'Close', prev: 'Previous', next: 'Next' }
   };
 
   const $ = (id) => document.getElementById(id);
@@ -87,6 +87,7 @@
     route();
   }
 
+  function closeSub() { $('nav-sub').hidden = true; $('nav-proj-btn').setAttribute('aria-expanded', 'false'); }
   function renderWorks() {
     const works = data.works || [], projects = data.projects || [];
     if (proj && !projects.some((p) => p.id === proj)) proj = '';
@@ -94,6 +95,9 @@
     $('filters').innerHTML = projects.length
       ? [{ id: '', title: { he: UI.he.all, en: UI.en.all } }, ...projects].map((p) => `<button type="button" data-proj="${esc(p.id)}" aria-pressed="${p.id === proj}">${esc(t(p.title))}</button>`).join('')
       : '';
+    $('nav-proj-btn').hidden = !projects.length;
+    if (!projects.length) closeSub();
+    $('nav-sub').innerHTML = [{ id: '', title: { he: UI.he.all, en: UI.en.all } }, ...projects].map((p) => `<a href="${p.id ? '#/project/' + encodeURIComponent(p.id) : '#works'}" data-goproj="${esc(p.id)}"${p.id === proj ? ' aria-current="true"' : ''}>${esc(t(p.title))}</a>`).join('');
     const cur = projects.find((p) => p.id === proj);
     $('proj-desc').textContent = cur ? t(cur.description) : '';
     $('count').textContent = pad(visible.length);
@@ -152,6 +156,9 @@
   document.addEventListener('click', (e) => {
     const el = e.target.closest('[data-open]');
     if (el) { show(Number(el.dataset.open)); return; }
+    const g = e.target.closest('[data-goproj]');
+    if (g) { e.preventDefault(); proj = g.dataset.goproj; renderWorks(); closeSub(); history.replaceState(null, '', proj ? `#/project/${encodeURIComponent(proj)}` : '#works'); $('works').scrollIntoView(); return; }
+    if (!e.target.closest('.nav')) closeSub();
     const f = e.target.closest('[data-proj]');
     if (f) { proj = f.dataset.proj; renderWorks(); history.replaceState(null, '', proj ? `#/project/${encodeURIComponent(proj)}` : '#works'); }
   });
@@ -178,6 +185,8 @@
   });
   window.addEventListener('hashchange', route);
 
+  $('nav-proj-btn').onclick = () => { const open = $('nav-sub').hidden; $('nav-sub').hidden = !open; $('nav-proj-btn').setAttribute('aria-expanded', String(open)); };
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSub(); });
   $('lang').onclick = () => { lang = lang === 'he' ? 'en' : 'he'; store.set('lang', lang); render(); };
 
   /* torn strips drift sideways as the page scrolls */
