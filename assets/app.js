@@ -3,7 +3,7 @@
 
   const UI = {
     he: { skip: 'דלג לעבודות', works: 'עבודות', projects: 'פרויקטים', writing: 'טקסטים', about: 'אודות', contact: 'קשר', motto: 'צילום · קריעה · הרכבה מחדש', talk: 'דברו איתי', all: 'הכול', open: 'לצפייה במסך מלא', read: 'לקריאה', photo: 'צילום', cm: 'ס״מ', shop: 'רכישת עבודות', shopNote: 'העבודות זמינות לרכישה דרך גלריה ״פחות מאלף״, תל אביב.', shopLink: 'לעמוד שלי בגלריה', noTexts: 'טקסטים יתווספו כאן בקרוב.', langBtn: 'EN', langLabel: 'Switch to English', close: 'סגירה', prev: 'הקודם', next: 'הבא' },
-    en: { skip: 'Skip to works', works: 'Works', projects: 'Projects', writing: 'Writing', about: 'About', contact: 'Contact', motto: 'Photograph · Tear · Reassemble', talk: 'Get in touch', all: 'All', open: 'View full screen', read: 'Read', photo: 'Photography', cm: 'cm', shop: 'Buy works', shopNote: 'Works are available through the Under 1000 gallery, Tel Aviv.', shopLink: 'My page at the gallery', noTexts: 'Texts will appear here soon.', langBtn: 'עב', langLabel: 'מעבר לעברית', close: 'Close', prev: 'Previous', next: 'Next' }
+    en: { skip: 'Skip to works', works: 'Works', projects: 'Projects', writing: 'Writing', about: 'About', contact: 'Contact', motto: 'Photograph · Tear · Reassemble', talk: 'Get in touch', all: 'All', open: 'View full screen', read: 'Read', photo: 'Photography', cm: 'cm', shop: 'Buy works', shopNote: 'Works are available to purchase through Under 1000 Gallery, Tel Aviv.', shopLink: 'My page at the gallery', noTexts: 'Texts will appear here soon.', langBtn: 'עב', langLabel: 'מעבר לעברית', close: 'Close', prev: 'Previous', next: 'Next' }
   };
 
   const $ = (id) => document.getElementById(id);
@@ -42,7 +42,7 @@
     $('lang').textContent = u.langBtn;
     $('lang').setAttribute('aria-label', u.langLabel);
 
-    document.querySelector('[data-bind="navname"]').textContent = `${t(data.artist)} · ${u.photo}`;
+    document.querySelector('[data-bind="navname"]').innerHTML = `${esc(t(data.artist))}<span class="nav-what"> · ${u.photo}</span>`;
     $('hero-name').innerHTML = t(data.artist).split(' ').map((p) => `<span>${esc(p)}</span>`).join('');
     document.querySelector('[data-bind="tagline"]').textContent = t(data.tagline);
     document.querySelector('[data-bind="quote"]').textContent = t(data.quote);
@@ -58,7 +58,9 @@
     const texts = data.texts || [];
     $('text-list').innerHTML = texts.length
       ? texts.map((x) => `<li><a href="#/text/${encodeURIComponent(x.id)}"><span>${esc(t(x.title))}</span><time>${esc(x.date || '')}</time></a></li>`).join('')
-      : `<li class="empty">${u.noTexts}</li>`;
+      : '';
+    $('nav-writing').hidden = !texts.length;
+    $('writing-label').hidden = !texts.length;
 
     $('portrait').src = data.portrait || '';
     $('portrait').alt = t(data.artist);
@@ -68,9 +70,9 @@
     const c = data.contact || {};
     const arrow = lang === 'he' ? '←' : '→';
     $('nav-ext').innerHTML = [
-      c.shop && `<a href="${esc(c.shop)}" target="_blank" rel="noopener">${u.shop}</a>`,
-      c.instagram && `<a href="${esc(c.instagram)}" target="_blank" rel="noopener" dir="ltr">Instagram</a>`,
-      c.onex && `<a href="${esc(c.onex)}" target="_blank" rel="noopener" dir="ltr">1x</a>`
+      c.shop && `<a class="shop" href="${esc(c.shop)}" target="_blank" rel="noopener">${u.shop}</a>`,
+      c.instagram && `<a class="icon" href="${esc(c.instagram)}" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a>`,
+      c.onex && `<a class="onex" href="${esc(c.onex)}" target="_blank" rel="noopener" dir="ltr">1x</a>`
     ].filter(Boolean).join('');
     $('shop-note').innerHTML = c.shop ? `${u.shopNote} <a href="${esc(c.shop)}" target="_blank" rel="noopener">${u.shopLink} ${arrow}</a>` : '';
     $('foot-links').innerHTML = [

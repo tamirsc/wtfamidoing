@@ -31,8 +31,12 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .nav-sub { order: 9; flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 0 28px; padding: 6px 0 4px; border-top: 1px solid #d6d4cc; font-family: var(--display); font-size: 30px; line-height: 1; }
 .nav-sub a { padding: 9px 0; }
 .nav-sub a[aria-current] { color: var(--accent); }
-.nav-ext { display: contents; }
+.nav-ext { display: flex; align-items: center; gap: 4px 26px; }
+.nav-ext:empty { display: none; }
 .nav-ext a:first-child { border-inline-start: 1.5px solid var(--ink); padding-inline-start: 26px; }
+.nav-ext .icon { display: inline-flex; align-items: center; }
+.nav-links [hidden], .eyebrow[hidden] { display: none !important; }
+.text-list:empty { display: none; }
 .nav-links a { padding: 10px 0; }
 .lang { background: none; border: 1.5px solid var(--ink); padding: 8px 13px; min-width: 44px; min-height: 40px; font-size: 13px; letter-spacing: .08em; }
 .lang:hover { background: var(--ink); color: var(--paper); }
@@ -162,11 +166,18 @@ dialog::backdrop { background: #0c0c0c; }
   .plate-two .work, .plate-one .frame { flex-basis: 100% !important; }
   html { scroll-padding-top: 110px; }
   .nav { padding: 8px var(--pad) 4px; }
-  .nav-links { flex-wrap: nowrap; width: 100%; overflow-x: auto; white-space: nowrap; gap: 20px; scrollbar-width: none; font-size: 14px; }
-  .nav-links::-webkit-scrollbar { display: none; }
-  .nav-ext a:first-child { padding-inline-start: 20px; }
-  .lang { order: 1; min-height: 36px; padding: 5px 11px; }
-  .nav-links { order: 2; margin-inline-start: 0; }
+  .nav-links { order: 2; margin-inline-start: 0; width: 100%; flex-wrap: wrap; gap: 0 4px; font-size: 14px; }
+  .nav { gap: 0 6px; }
+  .nav-links > a, .nav-links > button, .nav-ext a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 7px; }
+  .nav-links > a:first-child { padding-inline-start: 0; }
+  .nav-ext .shop { display: none; }
+  .nav-ext a:first-child { border-inline-start: 0; }
+  .nav-ext .icon, .nav-ext .onex { min-width: 44px; }
+  .nav-ext { order: 1; margin-inline-start: auto; gap: 0; font-size: 14px; }
+  .nav-name { display: inline-flex; align-items: center; min-height: 44px; }
+  .nav-what { display: none; }
+  .lang { order: 1; min-height: 44px; min-width: 44px; padding: 5px 11px; }
+  .shop-note a { display: inline-block; padding: 14px 0 6px; }
   .v-nav { position: absolute; bottom: 64px; height: 48px; }
   .v-prev { inset-inline-start: 4px; } .v-next { inset-inline-end: 4px; }
   .viewer img { padding: 56px 8px 0; }
