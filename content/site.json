@@ -32,6 +32,46 @@
   },
   "works": [
     {
+      "id": "wmwh0arht1",
+      "title": {
+        "he": "יחד, בנפרד",
+        "en": "Together, Apart"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "45×60",
+      "src": "photos/wmwh0arht1.jpg",
+      "thumb": "photos/wmwh0arht1-s.jpg",
+      "w": 1800,
+      "h": 2400,
+      "hero": false,
+      "year": "2019",
+      "projectOnly": true,
+      "project": "pmwgz0lhv"
+    },
+    {
+      "id": "wmwh08xvz1",
+      "title": {
+        "he": "בחברה טובה",
+        "en": "In Good Company"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "60×40",
+      "src": "photos/wmwh08xvz1.jpg",
+      "thumb": "photos/wmwh08xvz1-s.jpg",
+      "w": 2400,
+      "h": 1600,
+      "hero": false,
+      "project": "pmwgz0lhv",
+      "projectOnly": true,
+      "year": "2022"
+    },
+    {
       "id": "wmwh06mgf1",
       "title": {
         "he": "כל אחת בשלה",
@@ -48,7 +88,8 @@
       "h": 1349,
       "hero": false,
       "project": "pmwgz0lhv",
-      "projectOnly": true
+      "projectOnly": true,
+      "year": "2024"
     },
     {
       "id": "wmwh04i5l1",
