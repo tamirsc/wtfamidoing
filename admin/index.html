@@ -38,7 +38,17 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
 .status { font-size: 14px; }
 .status.err { color: #a12a12; font-weight: 600; }
 .hint { font-size: 14px; color: var(--mute); margin: 0 0 16px; }
-.connect { border: 2px solid var(--ink); padding: 18px; margin-bottom: 28px; }
+.connect { border: 1.5px solid var(--line); padding: 14px 18px; margin-top: 48px; }
+.connect[open] { border-color: var(--ink); }
+summary { cursor: pointer; font-weight: 600; min-height: 32px; }
+.connect summary { margin-bottom: 0; }
+.connect[open] summary { margin-bottom: 12px; }
+#c-state { font-weight: 400; color: var(--mute); font-size: 14px; }
+details.card > summary { display: flex; align-items: center; gap: 12px; list-style: none; }
+details.card > summary::-webkit-details-marker { display: none; }
+details.card > summary::before { content: '+'; font-size: 22px; line-height: 1; width: 18px; }
+details.card[open] > summary::before { content: '−'; }
+details.card[open] > summary { margin-bottom: 14px; }
 .connect h2, section h2 { margin: 0 0 12px; font-size: 18px; }
 .drop { display: block; border: 2px dashed var(--ink); padding: 28px; text-align: center; font-weight: 600; font-size: 16px; color: var(--ink); cursor: pointer; margin-bottom: 20px; }
 .drop:hover, .drop.over { background: #e4e2da; }
@@ -56,8 +66,14 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
   </div>
 </header>
 <main>
-  <div class="connect" id="connect">
-    <h2>חיבור ל־GitHub</h2>
+  <div class="tabs" role="tablist">
+    <button role="tab" data-tab="works" aria-selected="true">עבודות</button>
+    <button role="tab" data-tab="texts" aria-selected="false">טקסטים</button>
+    <button role="tab" data-tab="general" aria-selected="false">כללי</button>
+  </div>
+  <section id="panel"></section>
+  <details class="connect" id="connect">
+    <summary>חיבור ל־GitHub <span id="c-state"></span></summary>
     <p class="hint">השינויים נשמרים ישירות בריפו של האתר. צריך טוקן אישי (Fine-grained token) עם הרשאת Contents: Read and write לריפו הזה בלבד. הטוקן נשמר רק בדפדפן הזה.</p>
     <div class="grid">
       <div><label for="c-owner">בעלים (owner)</label><input type="text" id="c-owner" dir="ltr" autocomplete="off"></div>
@@ -66,14 +82,7 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
       <div><label for="c-token">טוקן</label><input type="password" id="c-token" dir="ltr" autocomplete="off"></div>
     </div>
     <p style="margin:14px 0 0;display:flex;gap:8px;flex-wrap:wrap"><button class="primary" id="c-go">התחברות</button><button id="c-out">ניתוק ומחיקת הטוקן</button></p>
-  </div>
-
-  <div class="tabs" role="tablist">
-    <button role="tab" data-tab="works" aria-selected="true">עבודות</button>
-    <button role="tab" data-tab="texts" aria-selected="false">טקסטים</button>
-    <button role="tab" data-tab="general" aria-selected="false">כללי</button>
-  </div>
-  <section id="panel"></section>
+  </details>
 </main>
 
 <script>
@@ -90,6 +99,8 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
   const removed = new Set();   // repo paths to delete on save
 
   const status = (msg, err) => { $('status').textContent = msg || ''; $('status').className = 'status' + (err ? ' err' : ''); };
+  const syncBox = (forceOpen) => { $('c-state').textContent = connected ? '· מחובר' : '· לא מחובר'; if (forceOpen !== undefined) $('connect').open = forceOpen; };
+  const openProjects = new Set();
   const markDirty = () => { dirty = true; $('save').disabled = !connected; status(connected ? 'יש שינויים שלא נשמרו' : 'יש שינויים. התחבר כדי לשמור'); };
 
   /* ---------- GitHub ---------- */
@@ -113,9 +124,9 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
       data = JSON.parse(b64decode(f.content)); data.projects ??= []; data.texts ??= []; sha = f.sha; connected = true; dirty = false;
       pending.clear(); removed.clear();
       localStorage.setItem(LS, JSON.stringify(cfg));
-      status('מחובר'); $('save').disabled = true; draw();
+      status('מחובר'); $('save').disabled = true; syncBox(false); draw();
     } catch (e) {
-      connected = false;
+      connected = false; syncBox(true);
       status(e.status === 401 ? 'הטוקן לא תקין או פג תוקף' : e.status === 404 ? 'הריפו או הקובץ לא נמצאו (או שלטוקן אין גישה)' : 'החיבור נכשל: ' + e.message, true);
     }
   }
@@ -187,8 +198,8 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
       $('panel').innerHTML = `<label class="drop" id="drop"><input type="file" id="files" accept="image/*" multiple>הוספת תמונות: לחיצה או גרירה לכאן</label>
         <p class="hint">התמונות מוקטנות אוטומטית (עד 2400 פיקסלים) לפני ההעלאה. ״ברצועות הפתיחה״ קובע אילו 4 עבודות יופיעו בראש דף הבית.</p>` +
         `<div class="card"><h2>פרויקטים</h2><p class="hint">פרויקט הוא קבוצת עבודות עם שם ותיאור. באתר מופיעים כפתורי סינון מעל העבודות. עבודה בלי פרויקט מופיעה רק תחת ״הכול״.</p>` +
-        data.projects.map((p, i) => `<div class="card"><div class="card-head"><strong>${esc(p.title.he || p.title.en || 'פרויקט ללא שם')}</strong><div class="card-tools"><button class="small" data-act="p-up" data-i="${i}" aria-label="הזזה למעלה">↑</button><button class="small" data-act="p-down" data-i="${i}" aria-label="הזזה למטה">↓</button><button class="small danger" data-act="del-proj" data-i="${i}">מחיקה</button></div></div>
-          <div class="grid">${field('שם (עברית)', `projects.${i}.title.he`)}${field('Name (English)', `projects.${i}.title.en`, { ltr: 1 })}${field('תיאור (עברית)', `projects.${i}.description.he`, { area: 1 })}${field('Description (English)', `projects.${i}.description.en`, { area: 1, ltr: 1 })}</div></div>`).join('') +
+        data.projects.map((p, i) => `<details class="card" data-proj="${esc(p.id)}"${openProjects.has(p.id) ? ' open' : ''}><summary><strong>${esc(p.title.he || p.title.en || 'פרויקט ללא שם')}</strong><span class="hint" style="margin:0">${data.works.filter((w) => w.project === p.id).length} עבודות</span><div class="card-tools"><button class="small" data-act="p-up" data-i="${i}" aria-label="הזזה למעלה">↑</button><button class="small" data-act="p-down" data-i="${i}" aria-label="הזזה למטה">↓</button><button class="small danger" data-act="del-proj" data-i="${i}">מחיקה</button></div></summary>
+          <div class="grid">${field('שם (עברית)', `projects.${i}.title.he`)}${field('Name (English)', `projects.${i}.title.en`, { ltr: 1 })}${field('תיאור (עברית)', `projects.${i}.description.he`, { area: 1 })}${field('Description (English)', `projects.${i}.description.en`, { area: 1, ltr: 1 })}</div></details>`).join('') +
         `<button data-act="add-proj">פרויקט חדש</button></div>` +
         data.works.map((w, i) => `<div class="card"><div class="card-head"><img src="${esc(imgUrl(w.thumb || w.src))}" alt="">
           <div>${pending.has(w.src) ? '<span class="new">חדש · טרם פורסם</span>' : ''}<label class="check"><input type="checkbox" data-path="works.${i}.hero"${w.hero ? ' checked' : ''}> ברצועות הפתיחה</label></div>
@@ -220,6 +231,7 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
     const v = el.type === 'checkbox' ? el.checked : el.dataset.paras ? el.value.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : el.value;
     setPath(el.dataset.path, v); markDirty();
   });
+  $('panel').addEventListener('toggle', (e) => { const id = e.target.dataset && e.target.dataset.proj; if (id) { if (e.target.open) openProjects.add(id); else openProjects.delete(id); } }, true);
   $('panel').addEventListener('click', (e) => {
     const b = e.target.closest('[data-act]'); if (!b) return;
     const i = Number(b.dataset.i), act = b.dataset.act;
@@ -230,7 +242,7 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
     else if (act === 't-down') move(data.texts, 1);
     else if (act === 'p-up') move(data.projects, -1);
     else if (act === 'p-down') move(data.projects, 1);
-    else if (act === 'add-proj') data.projects.push({ id: 'p' + Date.now().toString(36), title: { he: '', en: '' }, description: { he: '', en: '' } });
+    else if (act === 'add-proj') { const id = 'p' + Date.now().toString(36); openProjects.add(id); data.projects.push({ id, title: { he: '', en: '' }, description: { he: '', en: '' } }); }
     else if (act === 'del-proj') {
       const p = data.projects[i];
       if (!confirm(`למחוק את הפרויקט "${p.title.he || p.title.en || ''}"? העבודות עצמן לא יימחקו.`)) return;
@@ -253,7 +265,7 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
   document.querySelectorAll('[role=tab]').forEach((b) => { b.onclick = () => { tab = b.dataset.tab; draw(); }; });
   $('save').onclick = save;
   $('c-go').onclick = connect;
-  $('c-out').onclick = () => { localStorage.removeItem(LS); cfg = {}; connected = false; $('c-token').value = ''; $('save').disabled = true; status('נותקת. הטוקן נמחק מהדפדפן.'); };
+  $('c-out').onclick = () => { localStorage.removeItem(LS); cfg = {}; connected = false; $('c-token').value = ''; $('save').disabled = true; syncBox(true); status('נותקת. הטוקן נמחק מהדפדפן.'); };
   window.addEventListener('beforeunload', (e) => { if (dirty) e.preventDefault(); });
 
   /* ---------- start ---------- */
@@ -262,6 +274,7 @@ textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
   $('c-repo').value = cfg.repo || guess.repo || '';
   $('c-branch').value = cfg.branch || 'main';
   $('c-token').value = cfg.token || '';
+  syncBox(!cfg.token);
   if (cfg.token) connect();
   else fetch('../' + FILE, { cache: 'no-cache' }).then((r) => r.json()).then((d) => { data = d; data.texts ??= []; data.projects ??= []; draw(); status('מצב תצוגה. התחבר כדי לשמור'); }).catch(() => status('לא הצלחתי לטעון את התוכן', true));
 })();
