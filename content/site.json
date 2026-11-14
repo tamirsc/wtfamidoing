@@ -222,7 +222,8 @@
       "w": 1920,
       "h": 1920,
       "hero": true,
-      "year": "2024"
+      "year": "2024",
+      "display": "small"
     },
     {
       "id": "growth-through-glass",
