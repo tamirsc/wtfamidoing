@@ -32,6 +32,25 @@
   },
   "works": [
     {
+      "id": "wmwh04i5l1",
+      "title": {
+        "he": "עניין שבשגרה",
+        "en": "Nothing Out of the Ordinary"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "40×60",
+      "src": "photos/wmwh04i5l1.jpg",
+      "thumb": "photos/wmwh04i5l1-s.jpg",
+      "w": 1600,
+      "h": 2400,
+      "hero": false,
+      "projectOnly": true,
+      "project": "pmwgz0lhv"
+    },
+    {
       "id": "wmwgzyzdx1",
       "title": {
         "he": "עמדה משותפת",
