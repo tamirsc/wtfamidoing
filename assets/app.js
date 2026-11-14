@@ -96,7 +96,7 @@
     visible = works.map((w, i) => i).filter((i) => !proj || works[i].project === proj);
     $('nav-proj').hidden = !projects.length;
     if (!projects.length) closeSub();
-    $('nav-sub').innerHTML = [{ id: '', title: { he: UI.he.all, en: UI.en.all } }, ...projects].map((p) => `<a href="${p.id ? '#/project/' + encodeURIComponent(p.id) : '#works'}" data-goproj="${esc(p.id)}"${p.id === proj ? ' aria-current="true"' : ''}>${esc(t(p.title))}</a>`).join('');
+    $('nav-sub').innerHTML = projects.map((p) => `<a href="#/project/${encodeURIComponent(p.id)}" data-goproj="${esc(p.id)}"${p.id === proj ? ' aria-current="true"' : ''}>${esc(t(p.title))}</a>`).join('');
     const cur = projects.find((p) => p.id === proj);
     $('proj-title').textContent = cur ? t(cur.title) : '';
     $('proj-desc').textContent = cur ? t(cur.description) : '';
