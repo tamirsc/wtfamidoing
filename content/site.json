@@ -32,6 +32,23 @@
   },
   "works": [
     {
+      "id": "bands-of-landscape",
+      "title": {
+        "he": "רצועות נוף",
+        "en": "Bands of Landscape"
+      },
+      "medium": {
+        "he": "דיו על נייר",
+        "en": "Ink on paper"
+      },
+      "size": "35×20",
+      "src": "photos/bands-of-landscape.jpg",
+      "thumb": "photos/bands-of-landscape-s.jpg",
+      "w": 1920,
+      "h": 1080,
+      "hero": true
+    },
+    {
       "id": "wmwgpvsem1",
       "title": {
         "he": "שדה כבידה ",
@@ -49,23 +66,6 @@
       "hero": false,
       "project": "pmwgp92xn",
       "year": "2026"
-    },
-    {
-      "id": "bands-of-landscape",
-      "title": {
-        "he": "רצועות נוף",
-        "en": "Bands of Landscape"
-      },
-      "medium": {
-        "he": "דיו על נייר",
-        "en": "Ink on paper"
-      },
-      "size": "35×20",
-      "src": "photos/bands-of-landscape.jpg",
-      "thumb": "photos/bands-of-landscape-s.jpg",
-      "w": 1920,
-      "h": 1080,
-      "hero": true
     },
     {
       "id": "wmwgov1wu1",
@@ -99,6 +99,24 @@
       "src": "photos/wmwgnrove1.jpg",
       "thumb": "photos/wmwgnrove1-s.jpg",
       "w": 2400,
+      "h": 2400,
+      "hero": false,
+      "year": "2026"
+    },
+    {
+      "id": "wmwgq0mum1",
+      "title": {
+        "he": "מטריצה חסרה",
+        "en": "Incomplete Matrix"
+      },
+      "medium": {
+        "he": "דיו על נייר",
+        "en": "Ink on paper"
+      },
+      "size": "42x59",
+      "src": "photos/wmwgq0mum1.jpg",
+      "thumb": "photos/wmwgq0mum1-s.jpg",
+      "w": 1792,
       "h": 2400,
       "hero": false,
       "year": "2026"
