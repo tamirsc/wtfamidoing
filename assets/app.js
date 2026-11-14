@@ -94,7 +94,7 @@
     const works = data.works || [], projects = data.projects || [];
     if (proj && !projects.some((p) => p.id === proj)) proj = '';
     visible = works.map((w, i) => i).filter((i) => !proj || works[i].project === proj);
-    $('nav-proj-btn').hidden = !projects.length;
+    $('nav-proj').hidden = !projects.length;
     if (!projects.length) closeSub();
     $('nav-sub').innerHTML = [{ id: '', title: { he: UI.he.all, en: UI.en.all } }, ...projects].map((p) => `<a href="${p.id ? '#/project/' + encodeURIComponent(p.id) : '#works'}" data-goproj="${esc(p.id)}"${p.id === proj ? ' aria-current="true"' : ''}>${esc(t(p.title))}</a>`).join('');
     const cur = projects.find((p) => p.id === proj);
@@ -158,11 +158,11 @@
   const clearHash = (anchor) => { if (location.hash.startsWith('#/')) history.replaceState(null, '', anchor === '#works' && proj ? `#/project/${encodeURIComponent(proj)}` : anchor); };
 
   document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-proj')) closeSub();
     const el = e.target.closest('[data-open]');
     if (el) { show(Number(el.dataset.open)); return; }
     const g = e.target.closest('[data-goproj]');
     if (g) { e.preventDefault(); proj = g.dataset.goproj; renderWorks(); closeSub(); history.replaceState(null, '', proj ? `#/project/${encodeURIComponent(proj)}` : '#works'); $('works').scrollIntoView(); return; }
-    if (!e.target.closest('.nav')) closeSub();
 
   });
   $('v-prev').onclick = () => step(-1);

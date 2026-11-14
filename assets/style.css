@@ -27,9 +27,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .nav-btn::after { content: '▾'; display: inline-block; margin-inline-start: 5px; font-size: 11px; transition: transform .2s; }
 .nav-btn[aria-expanded="true"]::after { transform: rotate(180deg); }
 .nav-btn:hover { color: var(--accent); }
-.nav-btn[hidden], .nav-sub[hidden] { display: none; }
-.nav-sub { order: 9; flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 0 28px; padding: 6px 0 4px; border-top: 1px solid #d6d4cc; font-family: var(--display); font-size: 30px; line-height: 1; }
-.nav-sub a { padding: 9px 0; }
+.nav-proj { position: relative; display: inline-flex; }
+.nav-proj[hidden], .nav-sub[hidden] { display: none; }
+.nav-sub { position: absolute; top: calc(100% + 8px); inset-inline-start: -16px; z-index: 30; display: flex; flex-direction: column; min-width: 210px; max-width: min(340px, calc(100vw - 2 * var(--pad))); padding: 6px 0; background: var(--paper); border: 1.5px solid var(--ink); font-family: var(--display); font-size: 28px; line-height: 1; }
+.nav-proj .nav-sub a { display: block; padding: 11px 16px; }
+.nav-sub a:hover { background: #e4e2da; color: var(--ink); }
 .nav-sub a[aria-current] { color: var(--accent); }
 .nav-ext { display: flex; align-items: center; gap: 4px 26px; }
 .nav-ext:empty { display: none; }
@@ -168,7 +170,8 @@ dialog::backdrop { background: #0c0c0c; }
   .nav { padding: 8px var(--pad) 4px; }
   .nav-links { order: 2; margin-inline-start: 0; width: 100%; flex-wrap: wrap; gap: 0 4px; font-size: 14px; }
   .nav { gap: 0 6px; }
-  .nav-links > a, .nav-links > button, .nav-ext a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 7px; }
+  .nav-sub { inset-inline-start: 0; top: 100%; }
+  .nav-links > a, .nav-proj > button, .nav-ext a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 7px; }
   .nav-links > a:first-child { padding-inline-start: 0; }
   .nav-ext .shop { display: none; }
   .nav-ext a:first-child { border-inline-start: 0; }

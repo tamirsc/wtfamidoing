@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karantina:wght@400;700&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&family=Frank+Ruhl+Libre:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=20261114184630">
+<link rel="stylesheet" href="assets/style.css?v=20261114190719">
 </head>
 <body>
 <a class="skip" href="#works" data-ui="skip">דלג לעבודות</a>
@@ -25,14 +25,13 @@
   <a class="nav-name" href="#top" data-bind="navname"></a>
   <div class="nav-links">
     <a href="#works" data-ui="works">עבודות</a>
-    <button type="button" class="nav-btn" id="nav-proj-btn" aria-expanded="false" aria-controls="nav-sub" data-ui="projects" hidden>פרויקטים</button>
+    <span class="nav-proj" id="nav-proj" hidden><button type="button" class="nav-btn" id="nav-proj-btn" aria-expanded="false" aria-controls="nav-sub" data-ui="projects">פרויקטים</button><div class="nav-sub" id="nav-sub" hidden></div></span>
     <a href="#writing" id="nav-writing" data-ui="writing">טקסטים</a>
     <a href="#about" data-ui="about">אודות</a>
     <a href="#contact" data-ui="contact">קשר</a>
   </div>
   <span class="nav-ext" id="nav-ext"></span>
   <button type="button" class="lang" id="lang" aria-label="Switch to English">EN</button>
-  <div class="nav-sub" id="nav-sub" hidden></div>
 </nav>
 
 <header class="hero" id="top">
@@ -94,6 +93,6 @@
   <article id="r-body"></article>
 </dialog>
 
-<script src="assets/app.js?v=20261114184630"></script>
+<script src="assets/app.js?v=20261114190719"></script>
 </body>
 </html>
