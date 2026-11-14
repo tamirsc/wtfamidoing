@@ -46,7 +46,7 @@
       "thumb": "photos/wmwgnrove1-s.jpg",
       "w": 2400,
       "h": 2400,
-      "hero": true,
+      "hero": false,
       "year": "2026"
     },
     {
@@ -64,7 +64,7 @@
       "thumb": "photos/beyond-the-fence-s.jpg",
       "w": 1920,
       "h": 1440,
-      "hero": false,
+      "hero": true,
       "year": "2025"
     },
     {
@@ -204,5 +204,6 @@
       "hero": true
     }
   ],
-  "texts": []
+  "texts": [],
+  "projects": []
 }
