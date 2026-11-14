@@ -115,6 +115,7 @@ html[lang="en"] .hero-name { text-transform: uppercase; }
 .about-grid img { float: inline-start; width: clamp(96px, 10vw, 128px); aspect-ratio: 1; object-fit: cover; margin-block: 6px 12px; margin-inline-end: clamp(18px, 2.4vw, 32px); filter: grayscale(1) contrast(1.05); clip-path: polygon(0 2%, 12% 0, 30% 3%, 52% 0, 74% 3%, 100% 1%, 100% 98%, 84% 100%, 62% 97%, 40% 100%, 18% 97%, 0 99%); }
 .about-body { font-family: var(--serif); font-size: clamp(18px, 1.5vw, 21px); line-height: 1.75; }
 .about-body p { margin: 0 0 1.1em; }
+html[lang="en"] .about-body { font-family: var(--sans); font-size: 14px; line-height: 1.7; }
 
 /* footer */
 .foot { border-top: 2px solid var(--ink); margin: 0 var(--pad); padding: 20px 0 40px; }
