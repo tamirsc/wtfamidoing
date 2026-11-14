@@ -360,6 +360,17 @@
         "he": "פרטים שנמצאו בשיטוט מצולמים, מודפסים ומסודרים מחדש. באמצעות חיתוך, חזרה והזזה, עלים ומשטחים סדוקים יוצאים מהקשרם המקורי. קווים ממשיכים בין תצלומים או נקטעים בגבולותיהם, והרווחים בין החלקים משתתפים ביצירת סדר אחר.",
         "en": "Details encountered while wandering are photographed, printed and rearranged. Through cutting, repetition and displacement, leaves and cracked surfaces are drawn out of their original surroundings. Lines continue from one photograph to another or break at their edges, while the gaps between fragments help shape another order."
       }
+    },
+    {
+      "id": "pmwgz0lhv",
+      "title": {
+        "he": "דיאלוג?",
+        "en": "Dialogue?"
+      },
+      "description": {
+        "he": "",
+        "en": ""
+      }
     }
   ]
 }
