@@ -32,6 +32,25 @@
   },
   "works": [
     {
+      "id": "wmwgpvsem1",
+      "title": {
+        "he": "שדה כבידה ",
+        "en": "Gravitational Field"
+      },
+      "medium": {
+        "he": "דיו על נייר",
+        "en": "Ink on paper"
+      },
+      "size": "42x59",
+      "src": "photos/wmwgpvsem1.jpg",
+      "thumb": "photos/wmwgpvsem1-s.jpg",
+      "w": 1800,
+      "h": 2400,
+      "hero": false,
+      "project": "pmwgp92xn",
+      "year": "2026"
+    },
+    {
       "id": "bands-of-landscape",
       "title": {
         "he": "רצועות נוף",
