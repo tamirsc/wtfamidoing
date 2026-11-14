@@ -50,25 +50,6 @@
       "year": "2026"
     },
     {
-      "id": "wmwgu33791",
-      "title": {
-        "he": "בין העץ לאדמה",
-        "en": "Between Tree and Earth"
-      },
-      "medium": {
-        "he": "",
-        "en": ""
-      },
-      "size": "50x40",
-      "src": "photos/wmwgu33791.jpg",
-      "thumb": "photos/wmwgu33791-s.jpg",
-      "w": 2400,
-      "h": 1908,
-      "hero": false,
-      "project": "pmwgtpfnj",
-      "year": "2026"
-    },
-    {
       "id": "wmwguzol51",
       "title": {
         "he": "אפור זולג",
@@ -106,6 +87,25 @@
       "project": "pmwgp92xn",
       "year": "2026",
       "display": "small"
+    },
+    {
+      "id": "wmwgu33791",
+      "title": {
+        "he": "בין העץ לאדמה",
+        "en": "Between Tree and Earth"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "50x40",
+      "src": "photos/wmwgu33791.jpg",
+      "thumb": "photos/wmwgu33791-s.jpg",
+      "w": 2400,
+      "h": 1908,
+      "hero": false,
+      "project": "pmwgtpfnj",
+      "year": "2026"
     },
     {
       "id": "wmwgov1wu1",
