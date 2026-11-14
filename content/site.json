@@ -32,6 +32,46 @@
   },
   "works": [
     {
+      "id": "wmwh0iug81",
+      "title": {
+        "he": "מאחורי הגב",
+        "en": "Behind the Back"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "50×50",
+      "src": "photos/wmwh0iug81.jpg",
+      "thumb": "photos/wmwh0iug81-s.jpg",
+      "w": 2400,
+      "h": 2373,
+      "hero": false,
+      "project": "pmwgz0lhv",
+      "projectOnly": true,
+      "year": "2022"
+    },
+    {
+      "id": "wmwh0h88d1",
+      "title": {
+        "he": "שניים x שניים",
+        "en": "2 x 2"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "60×40",
+      "src": "photos/wmwh0h88d1.jpg",
+      "thumb": "photos/wmwh0h88d1-s.jpg",
+      "w": 2400,
+      "h": 1600,
+      "hero": false,
+      "project": "pmwgz0lhv",
+      "projectOnly": true,
+      "year": "2022"
+    },
+    {
       "id": "wmwh0arht1",
       "title": {
         "he": "יחד, בנפרד",
