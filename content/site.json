@@ -33,6 +33,24 @@
   },
   "works": [
     {
+      "id": "wmwgnrove1",
+      "title": {
+        "he": "מעלות אור",
+        "en": "Steps of Light"
+      },
+      "medium": {
+        "he": "דיו על נייר",
+        "en": "Ink on paper"
+      },
+      "size": "50×50",
+      "src": "photos/wmwgnrove1.jpg",
+      "thumb": "photos/wmwgnrove1-s.jpg",
+      "w": 2400,
+      "h": 2400,
+      "hero": true,
+      "year": "2026"
+    },
+    {
       "id": "beyond-the-fence",
       "title": {
         "he": "מעבר לגדר",
@@ -47,7 +65,8 @@
       "thumb": "photos/beyond-the-fence-s.jpg",
       "w": 1920,
       "h": 1440,
-      "hero": false
+      "hero": false,
+      "year": "2025"
     },
     {
       "id": "forest-script",
