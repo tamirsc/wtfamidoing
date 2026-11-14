@@ -93,7 +93,9 @@
   function renderWorks() {
     const works = data.works || [], projects = data.projects || [];
     if (proj && !projects.some((p) => p.id === proj)) proj = '';
-    visible = works.map((w, i) => i).filter((i) => !proj || works[i].project === proj);
+    // a work marked projectOnly appears only inside its project, not in the full list (ignored if its project no longer exists)
+    const inProject = (w) => w.projectOnly && projects.some((p) => p.id === w.project);
+    visible = works.map((w, i) => i).filter((i) => (proj ? works[i].project === proj : !inProject(works[i])));
     $('nav-proj').hidden = !projects.length;
     if (!projects.length) closeSub();
     $('nav-sub').innerHTML = projects.map((p) => `<a href="#/project/${encodeURIComponent(p.id)}" data-goproj="${esc(p.id)}"${p.id === proj ? ' aria-current="true"' : ''}>${esc(t(p.title))}</a>`).join('');
