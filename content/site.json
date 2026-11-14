@@ -46,7 +46,8 @@
       "thumb": "photos/bands-of-landscape-s.jpg",
       "w": 1920,
       "h": 1080,
-      "hero": true
+      "hero": true,
+      "year": "2026"
     },
     {
       "id": "wmwgpvsem1",
@@ -84,6 +85,25 @@
       "h": 2400,
       "hero": true,
       "year": "2025"
+    },
+    {
+      "id": "wmwgrt1tn1",
+      "title": {
+        "he": "מטריצה חסרה",
+        "en": "Incomplete Matrix"
+      },
+      "medium": {
+        "he": "",
+        "en": ""
+      },
+      "size": "42x59",
+      "src": "photos/wmwgrt1tn1.jpg",
+      "thumb": "photos/wmwgrt1tn1-s.jpg",
+      "w": 1792,
+      "h": 2400,
+      "hero": false,
+      "project": "pmwgp92xn",
+      "year": "2026"
     },
     {
       "id": "wmwgnrove1",
@@ -189,7 +209,8 @@
       "w": 1161,
       "h": 1600,
       "hero": false,
-      "project": "pmwgp92xn"
+      "project": "pmwgp92xn",
+      "year": "2026"
     },
     {
       "id": "inner-circle",
@@ -257,7 +278,8 @@
       "thumb": "photos/waves-of-gold-s.jpg",
       "w": 1501,
       "h": 2000,
-      "hero": false
+      "hero": false,
+      "year": "2025"
     }
   ],
   "texts": [],
