@@ -99,7 +99,7 @@
       "thumb": "photos/beyond-the-fence-s.jpg",
       "w": 1920,
       "h": 1440,
-      "hero": true,
+      "hero": false,
       "year": "2025"
     },
     {
@@ -117,7 +117,7 @@
       "thumb": "photos/forest-script-s.jpg",
       "w": 1920,
       "h": 1920,
-      "hero": false
+      "hero": true
     },
     {
       "id": "growth-through-glass",
@@ -151,7 +151,7 @@
       "thumb": "photos/lines-of-mending-s.jpg",
       "w": 1161,
       "h": 1600,
-      "hero": true
+      "hero": false
     },
     {
       "id": "inner-circle",
@@ -219,9 +219,21 @@
       "thumb": "photos/waves-of-gold-s.jpg",
       "w": 1501,
       "h": 2000,
-      "hero": true
+      "hero": false
     }
   ],
   "texts": [],
-  "projects": []
+  "projects": [
+    {
+      "id": "pmwgp92xn",
+      "title": {
+        "he": "פני השטח",
+        "en": "Surfaces"
+      },
+      "description": {
+        "he": "תצלומי תקריב של עור וצלקות נקרעים, נחתכים ומורכבים מחדש. הצלקת, סימן לחיבור שנוצר בגוף, פוגשת את הקרעים והרווחים בנייר. בין החלקים נוצר נוף חדש, שבו העור נותר מזוהה ובה בעת הופך למרקם, לצבע ולצורה.",
+        "en": "Close-up photographs of skin and scars are torn, cut and reassembled. The scar—a trace of the body knitting itself back together—meets the tears and gaps in the paper. A new landscape emerges, where skin remains recognisable even as it becomes texture, colour and form."
+      }
+    }
+  ]
 }
