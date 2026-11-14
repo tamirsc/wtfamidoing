@@ -114,6 +114,10 @@ html[lang="en"] .hero-name { text-transform: uppercase; }
 .sub { margin: 4px 0 0; font-size: 14px; color: var(--mute); }
 
 /* writing */
+.back-home { margin: 0; }
+.back-home[hidden], .writing[hidden] { display: none; }
+.back-home a { display: inline-block; padding: 12px 0; border-bottom: 2px solid var(--ink); font-weight: 600; font-size: 15px; }
+.back-home a:hover { color: var(--accent); border-color: var(--accent); }
 .writing { padding: 0 clamp(8px, 1.8vw, 24px) clamp(70px, 9vw, 120px); }
 .slip { background: var(--ink); color: var(--paper); padding: clamp(70px, 9vw, 120px) 9% clamp(80px, 10vw, 130px); transform: rotate(-1.1deg); clip-path: polygon(0 3%, 6% 1%, 14% 4%, 23% 1%, 33% 3%, 45% 0, 56% 3%, 66% 1%, 77% 4%, 88% 1%, 100% 3%, 100% 97%, 91% 100%, 81% 97%, 70% 99%, 60% 96%, 49% 100%, 38% 97%, 28% 99%, 17% 96%, 8% 99%, 0 97%); }
 .eyebrow { margin: 0 0 32px; font-size: 13px; letter-spacing: .14em; color: #c9c7c0; }

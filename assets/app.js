@@ -2,8 +2,8 @@
   'use strict';
 
   const UI = {
-    he: { skip: 'דלג לעבודות', works: 'עבודות', projects: 'פרויקטים', writing: 'טקסטים', about: 'אודות', contact: 'קשר', motto: 'צילום · קריעה · הרכבה מחדש', talk: 'דברו איתי', all: 'הכול', open: 'לצפייה במסך מלא', read: 'לקריאה', photo: 'צילום', cm: 'ס״מ', shop: 'רכישת עבודות', shopNote: 'העבודות זמינות לרכישה דרך גלריה ״פחות מאלף״, תל אביב.', shopLink: 'לעמוד שלי בגלריה', noTexts: 'טקסטים יתווספו כאן בקרוב.', langBtn: 'EN', langLabel: 'Switch to English', close: 'סגירה', prev: 'הקודם', next: 'הבא' },
-    en: { skip: 'Skip to works', works: 'Works', projects: 'Projects', writing: 'Writing', about: 'About', contact: 'Contact', motto: 'Photograph · Tear · Reassemble', talk: 'Get in touch', all: 'All', open: 'View full screen', read: 'Read', photo: 'Photography', cm: 'cm', shop: 'Buy works', shopNote: 'Works are available to purchase through Under 1000 Gallery, Tel Aviv.', shopLink: 'My page at the gallery', noTexts: 'Texts will appear here soon.', langBtn: 'עב', langLabel: 'מעבר לעברית', close: 'Close', prev: 'Previous', next: 'Next' }
+    he: { skip: 'דלג לעבודות', works: 'עבודות', projects: 'פרויקטים', writing: 'טקסטים', about: 'אודות', contact: 'קשר', motto: 'צילום · קריעה · הרכבה מחדש', talk: 'דברו איתי', all: 'הכול', home: 'חזרה לעמוד הבית', open: 'לצפייה במסך מלא', read: 'לקריאה', photo: 'צילום', cm: 'ס״מ', shop: 'רכישת עבודות', shopNote: 'העבודות זמינות לרכישה דרך גלריה ״פחות מאלף״, תל אביב.', shopLink: 'לעמוד שלי בגלריה', noTexts: 'טקסטים יתווספו כאן בקרוב.', langBtn: 'EN', langLabel: 'Switch to English', close: 'סגירה', prev: 'הקודם', next: 'הבא' },
+    en: { skip: 'Skip to works', works: 'Works', projects: 'Projects', writing: 'Writing', about: 'About', contact: 'Contact', motto: 'Photograph · Tear · Reassemble', talk: 'Get in touch', all: 'All', home: 'Back to home', open: 'View full screen', read: 'Read', photo: 'Photography', cm: 'cm', shop: 'Buy works', shopNote: 'Works are available to purchase through Under 1000 Gallery, Tel Aviv.', shopLink: 'My page at the gallery', noTexts: 'Texts will appear here soon.', langBtn: 'עב', langLabel: 'מעבר לעברית', close: 'Close', prev: 'Previous', next: 'Next' }
   };
 
   const $ = (id) => document.getElementById(id);
@@ -116,6 +116,10 @@
       step += 1;
     }
     $('plates').innerHTML = html;
+    // inside a project the page is just that project: no quote band, and a way back home under the works
+    $('writing').hidden = !!proj;
+    $('back-home').hidden = !proj;
+    $('back-home').firstElementChild.textContent = `${lang === 'he' ? '→' : '←'} ${UI[lang].home}`;
   }
 
   /* viewer */
@@ -161,6 +165,8 @@
     if (!e.target.closest('.nav-proj')) closeSub();
     const el = e.target.closest('[data-open]');
     if (el) { show(Number(el.dataset.open)); return; }
+    if (e.target.closest('[data-home]')) { e.preventDefault(); proj = ''; renderWorks(); closeSub(); history.replaceState(null, '', location.pathname + location.search); window.scrollTo(0, 0); return; }
+    if (proj && e.target.closest('#nav-writing')) { proj = ''; renderWorks(); }
     const g = e.target.closest('[data-goproj]');
     if (g) { e.preventDefault(); proj = g.dataset.goproj; renderWorks(); closeSub(); history.replaceState(null, '', proj ? `#/project/${encodeURIComponent(proj)}` : '#works'); $('works').scrollIntoView(); return; }
 
