@@ -68,11 +68,8 @@ html[lang="en"] .hero-name { text-transform: uppercase; }
 .count { font-family: var(--display); font-size: 44px; line-height: 1; }
 
 /* works */
-.filters { display: flex; flex-wrap: wrap; gap: 8px 10px; margin: 0 0 20px; }
-.filters:empty { display: none; }
-.filters button { background: none; border: 1.5px solid var(--ink); padding: 8px 16px; min-height: 44px; font-family: var(--display); font-size: 26px; line-height: 1; }
-.filters button:hover { background: #e2e0d8; }
-.filters button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.proj-title { margin: 0 0 14px; font-family: var(--display); font-weight: 700; font-size: clamp(48px, 6vw, 84px); line-height: .9; }
+.proj-title:empty { display: none; }
 .proj-desc { margin: 0 0 clamp(32px, 5vw, 60px); max-width: 40em; font-family: var(--serif); font-size: clamp(18px, 1.5vw, 21px); line-height: 1.7; white-space: pre-line; }
 .proj-desc:empty { display: none; }
 .shop-note { margin: calc(-1 * clamp(12px, 3vw, 36px)) 0 clamp(32px, 5vw, 60px); font-size: 15px; color: var(--mute); }

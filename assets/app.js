@@ -92,13 +92,11 @@
     const works = data.works || [], projects = data.projects || [];
     if (proj && !projects.some((p) => p.id === proj)) proj = '';
     visible = works.map((w, i) => i).filter((i) => !proj || works[i].project === proj);
-    $('filters').innerHTML = projects.length
-      ? [{ id: '', title: { he: UI.he.all, en: UI.en.all } }, ...projects].map((p) => `<button type="button" data-proj="${esc(p.id)}" aria-pressed="${p.id === proj}">${esc(t(p.title))}</button>`).join('')
-      : '';
     $('nav-proj-btn').hidden = !projects.length;
     if (!projects.length) closeSub();
     $('nav-sub').innerHTML = [{ id: '', title: { he: UI.he.all, en: UI.en.all } }, ...projects].map((p) => `<a href="${p.id ? '#/project/' + encodeURIComponent(p.id) : '#works'}" data-goproj="${esc(p.id)}"${p.id === proj ? ' aria-current="true"' : ''}>${esc(t(p.title))}</a>`).join('');
     const cur = projects.find((p) => p.id === proj);
+    $('proj-title').textContent = cur ? t(cur.title) : '';
     $('proj-desc').textContent = cur ? t(cur.description) : '';
     $('count').textContent = pad(visible.length);
     let html = '', k = 0, step = 0;
@@ -159,8 +157,7 @@
     const g = e.target.closest('[data-goproj]');
     if (g) { e.preventDefault(); proj = g.dataset.goproj; renderWorks(); closeSub(); history.replaceState(null, '', proj ? `#/project/${encodeURIComponent(proj)}` : '#works'); $('works').scrollIntoView(); return; }
     if (!e.target.closest('.nav')) closeSub();
-    const f = e.target.closest('[data-proj]');
-    if (f) { proj = f.dataset.proj; renderWorks(); history.replaceState(null, '', proj ? `#/project/${encodeURIComponent(proj)}` : '#works'); }
+
   });
   $('v-prev').onclick = () => step(-1);
   $('v-next').onclick = () => step(1);
