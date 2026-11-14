@@ -44,16 +44,13 @@ summary { cursor: pointer; font-weight: 600; min-height: 32px; }
 .connect summary { margin-bottom: 0; }
 .connect[open] summary { margin-bottom: 12px; }
 #c-state { font-weight: 400; font-size: 14px; opacity: .75; }
-details.card > summary { display: flex; align-items: center; gap: 12px; list-style: none; }
-details.card > summary::-webkit-details-marker { display: none; }
-details.card > summary::before { content: '+'; font-size: 22px; line-height: 1; width: 18px; }
-details.card[open] > summary::before { content: '−'; }
-details.card[open] > summary { margin-bottom: 14px; }
-.connect h2, section h2 { margin: 0 0 12px; font-size: 18px; }
-.drop { display: block; border: 2px dashed var(--ink); padding: 28px; text-align: center; font-weight: 600; font-size: 16px; color: var(--ink); cursor: pointer; margin-bottom: 20px; }
-.drop:hover, .drop.over { background: #e4e2da; }
-.drop input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.new { color: var(--accent); font-size: 13px; font-weight: 600; }
+.grid[hidden] { display: none; }
+.card.proj:not(.open) .card-head { margin-bottom: 0; }
+.card.proj .card-head { align-items: center; }
+.proj-toggle { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; min-height: 44px; padding: 0; border: 0; background: none; text-align: start; }
+.proj-toggle:hover { background: none; color: var(--accent); }
+.proj-toggle::before { content: '+'; font-size: 22px; line-height: 1; width: 18px; }
+.card.proj.open .proj-toggle::before { content: '−'; }
 @media (max-width: 640px) {
   header { padding: 8px 12px; gap: 6px 10px; }
   h1 { display: none; }
@@ -214,8 +211,8 @@ details.card[open] > summary { margin-bottom: 14px; }
       $('panel').innerHTML = `<label class="drop" id="drop"><input type="file" id="files" accept="image/*" multiple>הוספת תמונות: לחיצה או גרירה לכאן</label>
         <p class="hint">התמונות מוקטנות אוטומטית (עד 2400 פיקסלים) לפני ההעלאה. ״ברצועות הפתיחה״ קובע אילו 4 עבודות יופיעו בראש דף הבית.</p><p class="hint"><strong>גודל תצוגה:</strong> גדולה = לבד בשורה, ברוחב מלא. בינונית = לבד, כחצי רוחב. קטנה = כשליש רוחב, לצד העבודה שאחריה ברשימה. אוטומטי = גדולה ואחריה זוג, לסירוגין. בנייד הכול ברוחב מלא.</p>` +
         `<div class="card"><h2>פרויקטים</h2><p class="hint">פרויקט הוא קבוצת עבודות עם שם ותיאור. באתר מופיעים כפתורי סינון מעל העבודות. עבודה בלי פרויקט מופיעה רק תחת ״הכול״.</p>` +
-        data.projects.map((p, i) => `<details class="card" data-proj="${esc(p.id)}"${openProjects.has(p.id) ? ' open' : ''}><summary><strong>${esc(p.title.he || p.title.en || 'פרויקט ללא שם')}</strong><span class="hint" style="margin:0">${data.works.filter((w) => w.project === p.id).length} עבודות</span><div class="card-tools"><button class="small" data-act="p-up" data-i="${i}" aria-label="הזזה למעלה">↑</button><button class="small" data-act="p-down" data-i="${i}" aria-label="הזזה למטה">↓</button><button class="small danger" data-act="del-proj" data-i="${i}">מחיקה</button></div></summary>
-          <div class="grid">${field('שם (עברית)', `projects.${i}.title.he`)}${field('Name (English)', `projects.${i}.title.en`, { ltr: 1 })}${field('תיאור (עברית)', `projects.${i}.description.he`, { area: 1 })}${field('Description (English)', `projects.${i}.description.en`, { area: 1, ltr: 1 })}</div></details>`).join('') +
+        data.projects.map((p, i) => `<div class="card proj${openProjects.has(p.id) ? ' open' : ''}"><div class="card-head"><button type="button" class="proj-toggle" data-act="toggle-proj" data-id="${esc(p.id)}" aria-expanded="${openProjects.has(p.id)}"><strong>${esc(p.title.he || p.title.en || 'פרויקט ללא שם')}</strong><span class="hint" style="margin:0">${data.works.filter((w) => w.project === p.id).length} עבודות</span></button><div class="card-tools"><button class="small" data-act="p-up" data-i="${i}" aria-label="הזזה למעלה">↑</button><button class="small" data-act="p-down" data-i="${i}" aria-label="הזזה למטה">↓</button><button class="small danger" data-act="del-proj" data-i="${i}">מחיקה</button></div></div>
+          <div class="grid"${openProjects.has(p.id) ? '' : ' hidden'}>${field('שם (עברית)', `projects.${i}.title.he`)}${field('Name (English)', `projects.${i}.title.en`, { ltr: 1 })}${field('תיאור (עברית)', `projects.${i}.description.he`, { area: 1 })}${field('Description (English)', `projects.${i}.description.en`, { area: 1, ltr: 1 })}</div></div>`).join('') +
         `<button data-act="add-proj">פרויקט חדש</button></div>` +
         data.works.map((w, i) => `<div class="card"><div class="card-head"><img src="${esc(imgUrl(w.thumb || w.src))}" alt="">
           <div>${pending.has(w.src) ? '<span class="new">חדש · טרם פורסם</span>' : ''}<label class="check"><input type="checkbox" data-path="works.${i}.hero"${w.hero ? ' checked' : ''}> ברצועות הפתיחה</label></div>
@@ -251,6 +248,7 @@ details.card[open] > summary { margin-bottom: 14px; }
   $('panel').addEventListener('click', (e) => {
     const b = e.target.closest('[data-act]'); if (!b) return;
     const i = Number(b.dataset.i), act = b.dataset.act;
+    if (act === 'toggle-proj') { const id = b.dataset.id; if (openProjects.has(id)) openProjects.delete(id); else openProjects.add(id); draw(); return; }
     const move = (arr, d) => { const j = i + d; if (j < 0 || j >= arr.length) return; [arr[i], arr[j]] = [arr[j], arr[i]]; };
     if (act === 'up') move(data.works, -1);
     else if (act === 'down') move(data.works, 1);
